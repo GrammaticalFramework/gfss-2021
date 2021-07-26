@@ -8,6 +8,7 @@
 
 ### …
 
+## Shell commands
 
 ### parse
 Short form `p`. Example:  
