@@ -15,21 +15,25 @@ concrete MicroLangDummy of MicroLang =
 
 -- Cat
     S,      -- declarative sentence                e.g. "she lives here"
-    VP,     -- verb phrase                         e.g. "lives here"
     Comp,   -- complement of copula                e.g. "warm"
     AP,     -- adjectival phrase                   e.g. "warm"
-    NP,     -- noun phrase (subject or object)     e.g. "the red house"
     Prep,   -- preposition, or just case           e.g. "in", dative
-    V,      -- one-place verb                      e.g. "sleep"
-    V2,     -- two-place verb                      e.g. "love"
     A,      -- one-place adjective                 e.g. "warm"
     Pron,   -- personal pronoun                    e.g. "she"
     Adv     -- adverbial phrase                    e.g. "in the house"
      = {s : Str} ;
 
+    VP,     -- verb phrase                         e.g. "lives here"
+    V,      -- one-place verb                      e.g. "sleep"
+    V2     -- two-place verb                      e.g. "love"
+      = ResEng.Verb ;
+
     CN,     -- common noun (without determiner)    e.g. "red house"
     N      -- common noun                         e.g. "house"
       = ResEng.Noun ;
+
+    NP     -- noun phrase (subject or object)     e.g. "the red house"
+      = ResEng.NounPhrase ;
 
     Det    -- determiner phrase                   e.g. "those"
       = ResEng.Determiner ;
@@ -43,32 +47,37 @@ concrete MicroLangDummy of MicroLang =
 
 -- Sentence
     -- : NP -> VP -> S ;             -- John walks
-    PredVPS np vp = {s = np.s ++ vp.s} ;
+    PredVPS np vp = {
+      s = np.s ++ vp.s ! np.n
+      } ;
 
 -- Verb
     -- : V   -> VP ;             -- sleep
     UseV v = v ;
 
     -- : V2  -> NP -> VP ;       -- love it
-    ComplV2 v2 np = {s = v2.s ++ np.s} ;
+    --ComplV2 v2 np = {s = v2.s ++ np.s} ;
 
     -- : Comp  -> VP ;           -- be small
-    UseComp comp = {s = "be" ++ comp.s} ;
+    UseComp comp = {
+      s = \\n => wipCopula.s ! n ++ comp.s
+      } ;
 
     -- : AP  -> Comp ;           -- small
     CompAP ap = ap ;
 
     -- : VP -> Adv -> VP ;       -- sleep here
-    AdvVP vp adv = {s = vp.s ++ adv.s} ;
+    --AdvVP vp adv = {s = vp.s ++ adv.s} ;
 
 -- Noun
     -- : Det -> CN -> NP ;       -- the man
     DetCN det cn = {
       s = det.s ++ cn.s ! det.n ;
+      n = det.n
     } ;
 
     -- : Pron -> NP ;            -- she
-    UsePron pron = pron ;
+    --UsePron pron = pron ;
 
     -- : Det ;                   -- indefinite singular
     a_Det = mkDet "a" Sg ;

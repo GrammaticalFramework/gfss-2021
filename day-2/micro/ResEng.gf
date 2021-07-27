@@ -8,9 +8,11 @@ resource ResEng = {
   oper
     Noun : Type = {s : Number => Str} ;
 
-    Determiner : Type = {s : Str ; n : Number} ;
+    NounPhrase,
+    Determiner : Type
+      = {s : Str ; n : Number} ;
 
---    NounPhrase
+    Verb : Type = {s : Number => Str} ;
 
   --- lexicon constructor opers
   oper
@@ -38,12 +40,27 @@ resource ResEng = {
     mkA : Str -> {s : Str} ;
     mkA str = {s = str} ;
 
-    mkV : Str -> {s : Str} ;
-    mkV str = {s = str} ;
+    mkV,
+    mkV2 : Str -> Verb ;
+    mkV str = {
+      s = table {
+        Sg => str + "s" ;
+        Pl => str
+        }
+      } ;
 
-    mkV2 : Str -> {s : Str} ;
-    mkV2 str = {s = str} ;
+    mkV2 = mkV ;
+
+    wipCopula : Verb = {
+      s = table {
+        Sg => "is" ;
+        Pl => "are"
+        }
+      } ;
 
     mkAdv : Str -> {s : Str} ;
     mkAdv str = {s = str} ;
+
+
+
 }
