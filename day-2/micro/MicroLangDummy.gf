@@ -1,10 +1,13 @@
-concrete MicroLangDummy of MicroLang = {
+concrete MicroLangDummy of MicroLang =
+  open ResEng in {
 
 -- a very minimal concrete syntax: everything is just {s : Str}
 
 -----------------------------------------------------
 ---------------- Grammar part -----------------------
 -----------------------------------------------------
+
+
 
   lincat
 -- Common
@@ -15,18 +18,21 @@ concrete MicroLangDummy of MicroLang = {
     VP,     -- verb phrase                         e.g. "lives here"
     Comp,   -- complement of copula                e.g. "warm"
     AP,     -- adjectival phrase                   e.g. "warm"
-    CN,     -- common noun (without determiner)    e.g. "red house"
     NP,     -- noun phrase (subject or object)     e.g. "the red house"
-    Det,    -- determiner phrase                   e.g. "those"
     Prep,   -- preposition, or just case           e.g. "in", dative
     V,      -- one-place verb                      e.g. "sleep"
     V2,     -- two-place verb                      e.g. "love"
     A,      -- one-place adjective                 e.g. "warm"
-    N,      -- common noun                         e.g. "house"
     Pron,   -- personal pronoun                    e.g. "she"
     Adv     -- adverbial phrase                    e.g. "in the house"
      = {s : Str} ;
 
+    CN,     -- common noun (without determiner)    e.g. "red house"
+    N      -- common noun                         e.g. "house"
+      = ResEng.Noun ;
+
+    Det    -- determiner phrase                   e.g. "those"
+      = ResEng.Determiner ;
   lin
 -- Phrase
     -- : S  -> Utt ;         -- he walks
@@ -58,30 +64,34 @@ concrete MicroLangDummy of MicroLang = {
 -- Noun
     -- : Det -> CN -> NP ;       -- the man
     DetCN det cn = {
-      s = det.s ++ cn.s ;
+      s = det.s ++ cn.s ! det.n ;
     } ;
 
     -- : Pron -> NP ;            -- she
     UsePron pron = pron ;
 
     -- : Det ;                   -- indefinite singular
-    a_Det = mkDet "a" ;
+    a_Det = mkDet "a" Sg ;
 
     -- : Det ;                   -- indefinite plural
-    aPl_Det = mkDet "" ;
+    aPl_Det = mkDet "" Pl ;
 
     -- : Det ;                   -- definite singular   ---s
-    the_Det = mkDet "the" ;
+    the_Det = mkDet "the" Sg ;
 
     -- : Det ;                   -- definite plural     ---s
-    thePl_Det = mkDet "the" ;
+    thePl_Det = mkDet "the" Pl ;
 
+    this_Det = mkDet "this" Sg ;
+    these_Det = mkDet "these" Pl ;
     -- : N -> CN ;               -- house
     UseN n = n ;
 
     -- : AP -> CN -> CN ;        -- big house
+    -- lincat CN = {s : Number => Str} ;
     AdjCN ap cn = {
-      s = ap.s ++ cn.s ;
+      s = \\n => ap.s ++ cn.s ! n ;
+--      same as: table {n => ap.s ++ cn.s ! n }
     } ;
 
 -- Adjective
@@ -102,35 +112,10 @@ concrete MicroLangDummy of MicroLang = {
     she_Pron  = mkPron "she"  ;
     they_Pron = mkPron "they" ;
 
-oper
-
-  mkPrep,
-  mkPron,
-  mkDet : Str -> {s : Str}  ;
-
-  mkPrep str = {s = str} ;
-  mkPron str = {s = str} ;
-  mkDet str = {s = str} ;
-
 -----------------------------------------------------
 ---------------- Lexicon part -----------------------
 -----------------------------------------------------
 
-oper
-  mkN : Str -> {s : Str} ;
-  mkN str = {s = str} ;
-
-  mkA : Str -> {s : Str} ;
-  mkA str = {s = str} ;
-
-  mkV : Str -> {s : Str} ;
-  mkV str = {s = str} ;
-
-  mkV2 : Str -> {s : Str} ;
-  mkV2 str = {s = str} ;
-
-  mkAdv : Str -> {s : Str} ;
-  mkAdv str = {s = str} ;
 
 lin
   already_Adv = mkAdv "already" ;
