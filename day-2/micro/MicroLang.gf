@@ -68,6 +68,7 @@ abstract MicroLang = {
     he_Pron   : Pron ;
     she_Pron  : Pron ;
     they_Pron : Pron ;
+    i_Pron    : Pron ;
 
 
 -----------------------------------------------------

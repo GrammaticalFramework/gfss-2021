@@ -19,7 +19,6 @@ concrete MicroLangDummy of MicroLang =
     AP,     -- adjectival phrase                   e.g. "warm"
     Prep,   -- preposition, or just case           e.g. "in", dative
     A,      -- one-place adjective                 e.g. "warm"
-    Pron,   -- personal pronoun                    e.g. "she"
     Adv     -- adverbial phrase                    e.g. "in the house"
      = {s : Str} ;
 
@@ -32,6 +31,7 @@ concrete MicroLangDummy of MicroLang =
     N      -- common noun                         e.g. "house"
       = ResEng.Noun ;
 
+    Pron,  -- personal pronoun                    e.g. "she"
     NP     -- noun phrase (subject or object)     e.g. "the red house"
       = ResEng.NounPhrase ;
 
@@ -47,6 +47,7 @@ concrete MicroLangDummy of MicroLang =
 
 -- Sentence
     -- : NP -> VP -> S ;             -- John walks
+
     PredVPS np vp = {
       s = np.s ++ vp.s ! np.a
       } ;
@@ -71,6 +72,7 @@ concrete MicroLangDummy of MicroLang =
 
 -- Noun
     -- : Det -> CN -> NP ;       -- the man
+
     DetCN det cn = {
       s = det.s ++ cn.s ! det.n ;
       a = case det.n of {
@@ -80,7 +82,7 @@ concrete MicroLangDummy of MicroLang =
     } ;
 
     -- : Pron -> NP ;            -- she
-    --UsePron pron = pron ;
+    UsePron pron = pron ;
 
     -- : Det ;                   -- indefinite singular
     a_Det = mkDet "a" Sg ;
@@ -120,9 +122,10 @@ concrete MicroLangDummy of MicroLang =
     on_Prep = mkPrep "on" ;
     with_Prep = mkPrep "with" ;
 
-    he_Pron   = mkPron "he"   ;
-    she_Pron  = mkPron "she"  ;
-    they_Pron = mkPron "they" ;
+    i_Pron    = mkPron "I" P1Sg ;
+    he_Pron   = mkPron "he" P3Sg  ;
+    she_Pron  = mkPron "she" P3Sg ;
+    they_Pron = mkPron "they" WeYouThey ;
 
 -----------------------------------------------------
 ---------------- Lexicon part -----------------------

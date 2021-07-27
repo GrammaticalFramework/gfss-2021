@@ -23,14 +23,17 @@ resource ResEng = {
   --- lexicon constructor opers
   oper
 
-    mkPrep,
-      mkPron  : Str -> {s : Str}  ;
+    mkPrep : Str -> {s : Str}  ;
+    mkPrep str = {s = str} ;
 
     mkDet : Str -> Number -> Determiner ;
     mkDet str num = {s = str ; n = num} ;
 
-    mkPrep str = {s = str} ;
-    mkPron str = {s = str} ;
+    mkPron : Str -> VerbAgr -> NounPhrase ;
+    mkPron str agr = {
+      s = str ; -- I, you, they… so far ignoring me, them
+      a = agr
+      } ;
 
     -- ++ : "the" ++ "cat" = "the cat"
     -- +  : "cat" + "s"    = "cats"
