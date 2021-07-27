@@ -3,16 +3,22 @@ resource ResEng = {
   --- params
   param
     Number = Sg | Pl ;
+    VerbAgr =
+      P1Sg | -- I am
+      P3Sg | -- he/she/it is
+      WeYouThey ;  -- we/you/they are
+
 
   --- types for the lincats
   oper
-    Noun : Type = {s : Number => Str} ;
+    -- bubble of (Common) Noun & Determiner
+    Noun       : Type = {s : Number => Str} ;
+    Determiner : Type = {s : Str ; n : Number} ;
 
-    NounPhrase,
-    Determiner : Type
-      = {s : Str ; n : Number} ;
 
-    Verb : Type = {s : Number => Str} ;
+    -- bubble of NP & VP
+    Verb       : Type = {s : VerbAgr => Str} ;
+    NounPhrase : Type = {s : Str ; n : VerbAgr} ;
 
   --- lexicon constructor opers
   oper
@@ -44,8 +50,8 @@ resource ResEng = {
     mkV2 : Str -> Verb ;
     mkV str = {
       s = table {
-        Sg => str + "s" ;
-        Pl => str
+        P3Sg => str + "s" ; -- jumps, walks
+        _    => str -- I jump, you jump, they jump
         }
       } ;
 
@@ -53,14 +59,13 @@ resource ResEng = {
 
     wipCopula : Verb = {
       s = table {
-        Sg => "is" ;
-        Pl => "are"
+        P1Sg => "am" ;
+        P3Sg => "is" ;
+        _ => "are"
         }
       } ;
 
     mkAdv : Str -> {s : Str} ;
     mkAdv str = {s = str} ;
-
-
 
 }

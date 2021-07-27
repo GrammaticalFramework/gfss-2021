@@ -73,7 +73,10 @@ concrete MicroLangDummy of MicroLang =
     -- : Det -> CN -> NP ;       -- the man
     DetCN det cn = {
       s = det.s ++ cn.s ! det.n ;
-      n = det.n
+      n = case det.n of {
+        Sg => P3Sg ;
+        Pl => WeYouThey
+        } ;
     } ;
 
     -- : Pron -> NP ;            -- she
