@@ -48,7 +48,7 @@ concrete MicroLangDummy of MicroLang =
 -- Sentence
     -- : NP -> VP -> S ;             -- John walks
     PredVPS np vp = {
-      s = np.s ++ vp.s ! np.n
+      s = np.s ++ vp.s ! np.a
       } ;
 
 -- Verb
@@ -73,7 +73,7 @@ concrete MicroLangDummy of MicroLang =
     -- : Det -> CN -> NP ;       -- the man
     DetCN det cn = {
       s = det.s ++ cn.s ! det.n ;
-      n = case det.n of {
+      a = case det.n of {
         Sg => P3Sg ;
         Pl => WeYouThey
         } ;

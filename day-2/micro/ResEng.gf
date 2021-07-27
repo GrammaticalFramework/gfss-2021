@@ -18,7 +18,7 @@ resource ResEng = {
 
     -- bubble of NP & VP
     Verb       : Type = {s : VerbAgr => Str} ;
-    NounPhrase : Type = {s : Str ; n : VerbAgr} ;
+    NounPhrase : Type = {s : Str ; a : VerbAgr} ;
 
   --- lexicon constructor opers
   oper
