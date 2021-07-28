@@ -7,3 +7,7 @@ l PredVPS (UsePron i_Pron) (ComplV2 love_V2 (UsePron they_Pron))
 l PredVPS (UsePron i_Pron) (ComplV2 love_V2 (DetCN the_Det (UseN cat_N)))
 
 l PredVPS (UsePron they_Pron) (ReflV2 love_V2)
+
+l PredVPSNeg (UsePron she_Pron) (UseComp (CompAP (PositA blue_A)))
+
+l PredVPSNeg (UsePron i_Pron) (ComplV2 love_V2 (DetCN the_Det (UseN cat_N)))
