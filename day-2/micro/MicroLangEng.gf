@@ -75,7 +75,7 @@ concrete MicroLangEng of MicroLang =
 
     -- : Comp  -> VP ;           -- be small
     UseComp comp = {
-      s = \\n => wipCopula ! n ++ comp.s
+      s = \\n => copula ! n ++ comp.s
       } ;
 
     -- : AP  -> Comp ;           -- small

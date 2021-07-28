@@ -100,6 +100,12 @@ resource ResEng = {
 
     mkV2 = mkV ;
 
+    copula : Agr => Str = table {
+        P1 Sg      => "am" ;  -- I am
+        P3Sg Neutr => "are" ; -- they are (singular they)
+        P3Sg _     => "is" ;  -- he/she/it is
+        _          => "are"   -- we/youSg/youPl/theyPl are
+      } ;
     wipCopula : Agr => Str = table {
         P1 Sg      => "am" ;  -- I am
         P3Sg Neutr => "are" ; -- they are (singular they)
