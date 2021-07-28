@@ -9,7 +9,8 @@ resource ResEng = {
       P1 Number |
       P2 Number |
       P3Sg Gender |
-      P3Pl ;
+      P3Pl |
+      Inf ;
 
     Case =
       Nom | -- for pronouns: I, she, they
@@ -38,7 +39,9 @@ resource ResEng = {
     P3Sg Masc => "himself" ;
     P3Sg Neutr => "themself" ;
     P3Sg Inanimate => "itself" ;
-    P3Pl => "themselves" } ;
+    P3Pl => "themselves" ;
+    _ => "???"
+    } ;
 
   --- types for the lincats
   oper
@@ -104,13 +107,15 @@ resource ResEng = {
         P1 Sg      => "am" ;  -- I am
         P3Sg Neutr => "are" ; -- they are (singular they)
         P3Sg _     => "is" ;  -- he/she/it is
+        Inf => "be" ;
         _          => "are"   -- we/youSg/youPl/theyPl are
       } ;
-    wipCopula : Agr => Str = table {
-        P1 Sg      => "am" ;  -- I am
-        P3Sg Neutr => "are" ; -- they are (singular they)
-        P3Sg _     => "is" ;  -- he/she/it is
-        _          => "are"   -- we/youSg/youPl/theyPl are
+
+    negation : Agr => Str = table {
+        Inf        => "do" ;
+        P3Sg Neutr => "don't" ; -- they don't (singular they)
+        P3Sg _     => "doesn't" ;  -- he/she/it doesn't
+        _          => "don't"   -- I/we/youSg/youPl/theyPl don't
       } ;
 
     mkAdv : Str -> {s : Str} ;

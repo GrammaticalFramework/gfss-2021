@@ -26,14 +26,21 @@ abstract MicroLang = {
     N ;      -- common noun                         e.g. "house"
     Pron ;   -- personal pronoun                    e.g. "she"
     Adv ;    -- adverbial phrase                    e.g. "in the house"
+--    Pol ;    -- polarity                            positive, negative
 
   fun
+--    Pos, Neg : Pol ;
+
 -- Phrase
     UttS      : S  -> Utt ;         -- he walks
     UttNP     : NP -> Utt ;         -- he
 
 -- Sentence
+    PredVPSNeg,
     PredVPS   : NP -> VP -> S ;             -- John walks --s shortcut even wrt MiniGrammar
+
+
+--    PredVPPol : Pol -> NP -> VP -> S ;
 
 -- Verb
     UseV      : V   -> VP ;             -- sleep

@@ -54,6 +54,11 @@ concrete MicroLangEng of MicroLang =
       s = np.s ! Nom ++ vp.s ! np.a
       } ;
 
+    PredVPSNeg np vp = {
+      s = np.s ! Nom ++
+          negation ! np.a ++
+          vp.s ! Inf
+      } ;
 -- Verb
     -- : V   -> VP ;             -- sleep
     UseV v = {
