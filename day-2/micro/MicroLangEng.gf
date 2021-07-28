@@ -82,7 +82,7 @@ concrete MicroLangEng of MicroLang =
     CompAP ap = ap ;
 
     -- : VP -> Adv -> VP ;       -- sleep here
-    --AdvVP vp adv = {s = vp.s ++ adv.s} ;
+    AdvVP vp adv = {s = \\agr => vp.s ! agr ++ adv.s} ;
 
 -- Noun
     -- : Det -> CN -> NP ;       -- the man
