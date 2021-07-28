@@ -20,9 +20,17 @@ MicroLang> l PredVPS (DetCN thePl_Det (UseN baby_N)) (UseV walk_V)
 the babys walk
 ```
 
-Why is that? Because of the following in ResEng:
+Why is that? Because of the following in [ResEng](https://github.com/GrammaticalFramework/gfss-2021/blob/1c9dcb20d3f990ee13507d985ccc9e11aff5708c/day-2/micro/ResEng.gf#L83-L89):
 
-https://github.com/GrammaticalFramework/gfss-2021/blob/1c9dcb20d3f990ee13507d985ccc9e11aff5708c/day-2/micro/ResEng.gf#L83-L89
+```haskell
+    mkN : Str -> Noun ;
+    mkN str = {
+      s = table {
+        Sg => str ;
+        Pl => str + "s"
+        }
+      } ;
+ ```
 
 The constructor oper `mkN` doesn't discriminate between different nouns, it just adds the string `s` in the end, no matter what.
 
