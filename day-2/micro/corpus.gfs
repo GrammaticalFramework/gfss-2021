@@ -5,3 +5,5 @@ l PredVPS (UsePron they_Pron) (ComplV2 love_V2 (UsePron i_Pron))
 l PredVPS (UsePron i_Pron) (ComplV2 love_V2 (UsePron they_Pron))
 
 l PredVPS (UsePron i_Pron) (ComplV2 love_V2 (DetCN the_Det (UseN cat_N)))
+
+l PredVPS (UsePron they_Pron) (ReflV2 love_V2)
