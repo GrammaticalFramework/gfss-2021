@@ -38,6 +38,7 @@ abstract MicroLang = {
 -- Verb
     UseV      : V   -> VP ;             -- sleep
     ComplV2   : V2  -> NP -> VP ;       -- love it ---s
+    ReflV2    : V2 -> VP ;
     UseComp   : Comp  -> VP ;           -- be small
     CompAP    : AP  -> Comp ;           -- small
     AdvVP     : VP -> Adv -> VP ;       -- sleep here

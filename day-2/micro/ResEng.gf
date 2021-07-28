@@ -8,6 +8,10 @@ resource ResEng = {
       P3Sg | -- he/she/it is
       WeYouThey ;  -- we/you/they are
 
+    Case =
+      Nom | -- for pronouns: I, she, they
+      Acc ; --               me, her, them
+
 
   --- types for the lincats
   oper
@@ -17,8 +21,8 @@ resource ResEng = {
 
 
     -- bubble of NP & VP
-    Verb       : Type = {s : VerbAgr => Str} ;
-    NounPhrase : Type = {s : Str ; a : VerbAgr} ;
+    Verb       : Type = {s : VerbAgr => Str} ; -- lincat of V, V2, VP
+    NounPhrase : Type = {s : Case => Str ; a : VerbAgr} ;
 
   --- lexicon constructor opers
   oper
@@ -29,9 +33,16 @@ resource ResEng = {
     mkDet : Str -> Number -> Determiner ;
     mkDet str num = {s = str ; n = num} ;
 
-    mkPron : Str -> VerbAgr -> NounPhrase ;
-    mkPron str agr = {
-      s = str ; -- I, you, they… so far ignoring me, them
+  -- Syntax for giving arguments to a fun/oper
+  -- random : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str ;
+  -- random' : (x1,_,_,_,_,_,_,x8 : Str) -> Str ;
+
+--    mkPron : Str -> Str -> VerbAgr -> NounPhrase ;
+    mkPron : (nom, acc : Str) -> VerbAgr -> NounPhrase ;
+    mkPron nom acc agr = {
+      s = table {
+           Nom => nom ;
+           Acc => acc } ;
       a = agr
       } ;
 

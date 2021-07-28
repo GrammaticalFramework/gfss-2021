@@ -1,4 +1,4 @@
-concrete MicroLangDummy of MicroLang =
+concrete MicroLangEng of MicroLang =
   open ResEng in {
 
 -- a very minimal concrete syntax: everything is just {s : Str}
@@ -43,13 +43,13 @@ concrete MicroLangDummy of MicroLang =
     UttS s = s ;
 
     -- : NP -> Utt ;         -- he
-    UttNP np = np ;
+    UttNP np = {s = np.s ! Nom} ;
 
 -- Sentence
     -- : NP -> VP -> S ;             -- John walks
 
     PredVPS np vp = {
-      s = np.s ++ vp.s ! np.a
+      s = np.s ! Nom ++ vp.s ! np.a
       } ;
 
 -- Verb
@@ -57,7 +57,9 @@ concrete MicroLangDummy of MicroLang =
     UseV v = v ;
 
     -- : V2  -> NP -> VP ;       -- love it
-    --ComplV2 v2 np = {s = v2.s ++ np.s} ;
+    ComplV2 v2 np = {
+      s = \\vagr => v2.s ! vagr ++ np.s ! Acc
+      } ;
 
     -- : Comp  -> VP ;           -- be small
     UseComp comp = {
@@ -72,9 +74,8 @@ concrete MicroLangDummy of MicroLang =
 
 -- Noun
     -- : Det -> CN -> NP ;       -- the man
-
     DetCN det cn = {
-      s = det.s ++ cn.s ! det.n ;
+      s = \\_ => det.s ++ cn.s ! det.n ;
       a = case det.n of {
         Sg => P3Sg ;
         Pl => WeYouThey
@@ -114,7 +115,7 @@ concrete MicroLangDummy of MicroLang =
 
 -- Adverb
     -- : Prep -> NP -> Adv ;     -- in the house
-    PrepNP prep np = {s = prep.s ++ np.s} ;
+    PrepNP prep np = {s = prep.s ++ np.s ! Acc} ;
 
 -- Structural
     -- : Prep ;
@@ -122,10 +123,11 @@ concrete MicroLangDummy of MicroLang =
     on_Prep = mkPrep "on" ;
     with_Prep = mkPrep "with" ;
 
-    i_Pron    = mkPron "I" P1Sg ;
-    he_Pron   = mkPron "he" P3Sg  ;
-    she_Pron  = mkPron "she" P3Sg ;
-    they_Pron = mkPron "they" WeYouThey ;
+    i_Pron    = mkPron "I" "me" P1Sg ;
+    he_Pron   = mkPron "he" "him" P3Sg  ;
+    she_Pron  = mkPron "she" "her" P3Sg ;
+--    youSg_Pron, youPl_Pron = …
+    they_Pron = mkPron "they" "them" WeYouThey ;
 
 -----------------------------------------------------
 ---------------- Lexicon part -----------------------
