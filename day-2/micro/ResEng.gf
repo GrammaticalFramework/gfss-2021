@@ -3,15 +3,42 @@ resource ResEng = {
   --- params
   param
     Number = Sg | Pl ;
-    VerbAgr =
-      P1Sg | -- I am
-      P3Sg | -- he/she/it is
-      WeYouThey ;  -- we/you/they are
+    Gender = Masc | Fem | Neutr | Inanimate ;
+
+    Agr =
+      P1 Number |
+      P2 Number |
+      P3Sg Gender |
+      P3Pl ;
 
     Case =
       Nom | -- for pronouns: I, she, they
       Acc ; --               me, her, them
 
+  oper
+    agr2num : Agr -> Number = \a -> case a of {
+      P3Sg (Fem|Masc|Inanimate)
+        => Sg ;
+      _ => Pl
+    } ;
+
+    {- Demonstration: case expressions are syntactic sugar for tables
+    agr2numTbl : Agr => Number = table {
+      P3Sg (Fem|Masc|Inanimate)
+        => Sg ;
+      _ => Pl
+    } ; -}
+
+  reflPron : Agr => Str = table {
+    P1 Sg => "myself" ;
+    P1 Pl => "ourselves" ;
+    P2 Sg => "yourself" ;
+    P2 Pl => "yourselves" ;
+    P3Sg Fem => "herself" ;
+    P3Sg Masc => "himself" ;
+    P3Sg Neutr => "themself" ;
+    P3Sg Inanimate => "itself" ;
+    P3Pl => "themselves" } ;
 
   --- types for the lincats
   oper
@@ -21,8 +48,10 @@ resource ResEng = {
 
 
     -- bubble of NP & VP
-    Verb       : Type = {s : VerbAgr => Str} ; -- lincat of V, V2, VP
-    NounPhrase : Type = {s : Case => Str ; a : VerbAgr} ;
+    Verb       : Type = {s : Number => Str} ; -- lincat of V, V2
+
+    VerbPhrase : Type = {s : Agr => Str} ; -- lincat of VP
+    NounPhrase : Type = {s : Case => Str ; a : Agr} ;
 
   --- lexicon constructor opers
   oper
@@ -37,8 +66,8 @@ resource ResEng = {
   -- random : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str ;
   -- random' : (x1,_,_,_,_,_,_,x8 : Str) -> Str ;
 
---    mkPron : Str -> Str -> VerbAgr -> NounPhrase ;
-    mkPron : (nom, acc : Str) -> VerbAgr -> NounPhrase ;
+--    mkPron : Str -> Str -> Agr -> NounPhrase ;
+    mkPron : (nom, acc : Str) -> Agr -> NounPhrase ;
     mkPron nom acc agr = {
       s = table {
            Nom => nom ;
@@ -64,19 +93,18 @@ resource ResEng = {
     mkV2 : Str -> Verb ;
     mkV str = {
       s = table {
-        P3Sg => str + "s" ; -- jumps, walks
+        Sg => str + "s" ; -- jumps, walks
         _    => str -- I jump, you jump, they jump
         }
       } ;
 
     mkV2 = mkV ;
 
-    wipCopula : Verb = {
-      s = table {
-        P1Sg => "am" ;
-        P3Sg => "is" ;
-        _ => "are"
-        }
+    wipCopula : Agr => Str = table {
+        P1 Sg      => "am" ;  -- I am
+        P3Sg Neutr => "are" ; -- they are (singular they)
+        P3Sg _     => "is" ;  -- he/she/it is
+        _          => "are"   -- we/youSg/youPl/theyPl are
       } ;
 
     mkAdv : Str -> {s : Str} ;

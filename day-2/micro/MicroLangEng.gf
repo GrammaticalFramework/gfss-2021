@@ -22,7 +22,9 @@ concrete MicroLangEng of MicroLang =
     Adv     -- adverbial phrase                    e.g. "in the house"
      = {s : Str} ;
 
-    VP,     -- verb phrase                         e.g. "lives here"
+    VP     -- verb phrase                         e.g. "lives here"
+      = ResEng.VerbPhrase ;
+
     V,      -- one-place verb                      e.g. "sleep"
     V2     -- two-place verb                      e.g. "love"
       = ResEng.Verb ;
@@ -54,16 +56,26 @@ concrete MicroLangEng of MicroLang =
 
 -- Verb
     -- : V   -> VP ;             -- sleep
-    UseV v = v ;
+    UseV v = {
+      s = \\agr => v.s ! (agr2num agr) ;
+    } ;
+
+    -- : V2  -> VP ;             -- love myself
+    ReflV2 v2 = {
+      s = \\agr =>
+         v2.s ! (agr2num agr) ++ ResEng.reflPron ! agr
+      } ;
 
     -- : V2  -> NP -> VP ;       -- love it
     ComplV2 v2 np = {
-      s = \\vagr => v2.s ! vagr ++ np.s ! Acc
+      s = \\agr =>
+        let num : Number = agr2num agr
+        in  v2.s ! num ++ np.s ! Acc
       } ;
 
     -- : Comp  -> VP ;           -- be small
     UseComp comp = {
-      s = \\n => wipCopula.s ! n ++ comp.s
+      s = \\n => wipCopula ! n ++ comp.s
       } ;
 
     -- : AP  -> Comp ;           -- small
@@ -77,8 +89,8 @@ concrete MicroLangEng of MicroLang =
     DetCN det cn = {
       s = \\_ => det.s ++ cn.s ! det.n ;
       a = case det.n of {
-        Sg => P3Sg ;
-        Pl => WeYouThey
+        Sg => P3Sg Inanimate ;
+        Pl => P3Pl
         } ;
     } ;
 
@@ -123,11 +135,11 @@ concrete MicroLangEng of MicroLang =
     on_Prep = mkPrep "on" ;
     with_Prep = mkPrep "with" ;
 
-    i_Pron    = mkPron "I" "me" P1Sg ;
-    he_Pron   = mkPron "he" "him" P3Sg  ;
-    she_Pron  = mkPron "she" "her" P3Sg ;
+    i_Pron    = mkPron "I" "me" (P1 Sg) ;
+    he_Pron   = mkPron "he" "him" (P3Sg Masc)  ;
+    she_Pron  = mkPron "she" "her" (P3Sg Fem) ;
 --    youSg_Pron, youPl_Pron = …
-    they_Pron = mkPron "they" "them" WeYouThey ;
+    they_Pron = mkPron "they" "them" P3Pl ;
 
 -----------------------------------------------------
 ---------------- Lexicon part -----------------------
