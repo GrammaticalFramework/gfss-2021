@@ -16,23 +16,21 @@ if len(sys.argv) < 2:
 command_as_list = sys.argv[1:] # command as a list of strings
 
 command = ' '.join(command_as_list)
-print(command)
 
 # Is the command we read unix or English?
 try:
     i = eng.parse(command)
-    _, exp = i.next()
-    #print(exp)
-    #print("This was English!")
-    lin = unix.linearize(exp)
-    print(lin)
-    subprocess.run(lin)
-
 except pgf.ParseError:
-    try:
-        i = unix.parse(command)
-        _, exp = i.next()
-        print(exp)
-        print("This was already a Unix command")
-    except pgf.ParseError:
-        print("Be more careful, don't give me nonsense input lah!")
+    print("Be more careful, don't give me nonsense input lah!")
+else:
+    _, exp = i.__next__()
+    lin = unix.linearize(exp)
+    subprocess.run(lin.split())
+
+    # Homework: make it work nice and respond to both English and Unix!
+    # try:
+    #     i = unix.parse(command)
+    #     _, exp = i.__next__()
+    #     print("This was already a Unix command, talk to me in English!")
+    #     subprocess.run(command_as_list)
+    # except pgf.ParseError:
