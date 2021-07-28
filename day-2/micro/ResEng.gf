@@ -4,13 +4,13 @@ resource ResEng = {
   param
     Number = Sg | Pl ;
     Gender = Masc | Fem | Neutr | Inanimate ;
+    Polarity = Pos | Neg ;
 
-    Agr =
+    Agr =             -- 9 forms needed for reflexive pronouns
       P1 Number |
       P2 Number |
       P3Sg Gender |
-      P3Pl |
-      Inf ;
+      P3Pl ;
 
     Case =
       Nom | -- for pronouns: I, she, they
@@ -39,22 +39,21 @@ resource ResEng = {
     P3Sg Masc => "himself" ;
     P3Sg Neutr => "themself" ;
     P3Sg Inanimate => "itself" ;
-    P3Pl => "themselves" ;
-    _ => "???"
+    P3Pl => "themselves"
     } ;
 
   --- types for the lincats
   oper
-    -- bubble of (Common) Noun & Determiner
     Noun       : Type = {s : Number => Str} ;
     Determiner : Type = {s : Str ; n : Number} ;
-
-
-    -- bubble of NP & VP
-    Verb       : Type = {s : Number => Str} ; -- lincat of V, V2
-
-    VerbPhrase : Type = {s : Agr => Str} ; -- lincat of VP
     NounPhrase : Type = {s : Case => Str ; a : Agr} ;
+
+    Verb       : Type = {s : Number => Str ; inf : Str} ; -- lincat of V, V2
+    -- record extension: use all fields from Verb and extend with those after **
+    VerbPhrase : Type = {  -- lincat of VP
+      pred  : Polarity => Agr => Str ; -- loves/doesn't love/is/isn't
+      compl : Agr => Str               -- the cat/yourself/themselves
+      } ;
 
   --- lexicon constructor opers
   oper
@@ -98,7 +97,8 @@ resource ResEng = {
       s = table {
         Sg => str + "s" ; -- jumps, walks
         _    => str -- I jump, you jump, they jump
-        }
+        } ;
+      inf = str ;
       } ;
 
     mkV2 = mkV ;
@@ -107,12 +107,17 @@ resource ResEng = {
         P1 Sg      => "am" ;  -- I am
         P3Sg Neutr => "are" ; -- they are (singular they)
         P3Sg _     => "is" ;  -- he/she/it is
-        Inf => "be" ;
         _          => "are"   -- we/youSg/youPl/theyPl are
       } ;
 
+    negCopula : Agr => Str = table {
+        P1 Sg      => "am not" ;  -- I am not
+        P3Sg Neutr => "aren't" ;  -- they aren't (singular they)
+        P3Sg _     => "isn't" ;   -- he/she/it isn't
+        _          => "aren't"    -- we/youSg/youPl/theyPl aren't
+      } ;
+
     negation : Agr => Str = table {
-        Inf        => "do" ;
         P3Sg Neutr => "don't" ; -- they don't (singular they)
         P3Sg _     => "doesn't" ;  -- he/she/it doesn't
         _          => "don't"   -- I/we/youSg/youPl/theyPl don't

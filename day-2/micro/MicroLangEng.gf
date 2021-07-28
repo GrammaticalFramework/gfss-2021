@@ -51,43 +51,60 @@ concrete MicroLangEng of MicroLang =
     -- : NP -> VP -> S ;             -- John walks
 
     PredVPS np vp = {
-      s = np.s ! Nom ++ vp.s ! np.a
+      s = np.s ! Nom ++              -- you
+          vp.pred ! Pos ! np.a ++    -- love
+          vp.compl ! np.a            -- yourself / the cat
       } ;
 
     PredVPSNeg np vp = {
-      s = np.s ! Nom ++
-          negation ! np.a ++
-          vp.s ! Inf
+      s = np.s ! Nom ++              -- they
+          vp.pred ! Neg ! np.a ++    -- don't love/aren't
+          vp.compl ! np.a            -- themselves
+
       } ;
 -- Verb
     -- : V   -> VP ;             -- sleep
     UseV v = {
-      s = \\agr => v.s ! (agr2num agr) ;
+      pred = table {
+        Pos => \\agr => v.s ! agr2num agr ;
+        Neg => \\agr => negation ! agr ++ v.inf
+      } ;
+      compl = \\_ => []
     } ;
 
     -- : V2  -> VP ;             -- love myself
     ReflV2 v2 = {
-      s = \\agr =>
-         v2.s ! (agr2num agr) ++ ResEng.reflPron ! agr
+      pred = table {
+        Pos => \\agr => v2.s ! agr2num agr ;
+        Neg => \\agr => negation ! agr ++ v2.inf
+      } ;
+      compl = ResEng.reflPron
       } ;
 
     -- : V2  -> NP -> VP ;       -- love it
     ComplV2 v2 np = {
-      s = \\agr =>
-        let num : Number = agr2num agr
-        in  v2.s ! num ++ np.s ! Acc
+      pred = table {
+        Pos => \\agr => v2.s ! agr2num agr ;
+        Neg => \\agr => negation ! agr ++ v2.inf
+      } ;
+      compl = \\_ => np.s ! Acc
       } ;
 
     -- : Comp  -> VP ;           -- be small
     UseComp comp = {
-      s = \\n => copula ! n ++ comp.s
+      pred = table {
+        Pos => copula ;
+        Neg => negCopula } ;
+      compl = \\_ => comp.s ;
       } ;
 
     -- : AP  -> Comp ;           -- small
     CompAP ap = ap ;
 
     -- : VP -> Adv -> VP ;       -- sleep here
-    AdvVP vp adv = {s = \\agr => vp.s ! agr ++ adv.s} ;
+    AdvVP vp adv = vp ** {
+      compl = \\agr => vp.compl ! agr ++ adv.s
+      } ;
 
 -- Noun
     -- : Det -> CN -> NP ;       -- the man
