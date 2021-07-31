@@ -305,4 +305,35 @@ The SMT solver could also be used to find the exact linear slope to give to the 
 
 - http://www.cse.chalmers.se/~gersch/slides-talks/slides-ATVA-07.pdf
 
+** Standing on the Shoulders of Giants
+
+The text planning / logical structure of a contract we borrow from Deon Digital's CSL.
+
+The event calculus we borrow from Shanahan; recently implemented in LSP.
+
+For abductive reasoning under uncertainty we use Prolog-style clingo and s(CASP).
+
+** So we proceed:
+
+some examples of SF L4 in action
+
+- for PDPA
+- for Safe
+- for Rule34
+
+Suppose we have parsed this into an AST; how do we proceed to integrate this with a GF application grammar?
+
+How much of the GF application grammar can we infer and auto-generate?
+
+** Dialect support
+
+Multiple equivalent phrasings of the same underlying logic:
+
+- 3 + 4
+- three plus four
+- four plus three
+- the sum of three and four
+- seven
+
+
 
