@@ -87,7 +87,9 @@ so, your basic MathLang -- in an OOP phrasing we would say
 
 so we know we are dealing with timed automata; we can use  a temporal logic of some sort, think LTL/CTL
 
-** Example 3
+** Did you notice the type error?
+
+* Example 3
 
 Above we've seen *regulative rules*, involving deontics and temporals.
 
@@ -95,7 +97,7 @@ One more example to demonstrate *prescriptive rules*:
 
 https://500startups.app.box.com/s/8ybxx9y3bhk4mte50v7k (500's KISS, debt)
 
-*** Definitions.
+** Definitions.
 
 - (a) “Conversion Shares” shall mean:
   - (i) with respect to a conversion pursuant to Section 2.1,
@@ -315,13 +317,19 @@ For abductive reasoning under uncertainty we use Prolog-style clingo and s(CASP)
 
 ** So we proceed:
 
-some examples of SF L4 in action
+some examples of L4 in action
 
-- for PDPA
-- for Safe
-- for Rule34
+*** for Rule34
 
-Suppose we have parsed this into an AST; how do we proceed to integrate this with a GF application grammar?
+- logicly diagram
+- L4 with defeasibility
+
+*** for PDPA
+- SF L4
+*** for Safe
+- SF L4
+
+** Suppose we have parsed this into an AST; how do we proceed to integrate this with a GF application grammar?
 
 How much of the GF application grammar can we infer and auto-generate?
 
