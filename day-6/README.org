@@ -1,0 +1,308 @@
+#+TITLE: Special Theme: Computational Law, L4, and NLG with GF
+
+* Example 1
+
+A few years ago in Riga I shared a sentence with over a thousand words. I thought, wouldn't it be interesting to build a GF grammar for legal language? That would allow us to generate laws and contracts from some upstream representation in a high-level language. All we have to do is figure out the semantics and logic behind this kind of writing.
+
+** Missouri
+
+https://revisor.mo.gov/main/OneSection.aspx?section=233.285&bid=12522&hl=
+
+233.285.  Law not to affect road districts incorporated prior to effective date. — The repealing of the sections and law repealed by this law shall not have the effect of abating, nullifying, suspending or vitiating any public road district incorporated, or established by preliminary order, prior to the taking effect of this law or any proceedings by any such public road district; but any public road district finally incorporated, or established only by preliminary order, prior to the taking effect of this law, except districts established only by preliminary order in which there has been held a meeting of landowners of the district, in compliance with laws repealed by this law, at which owners of a majority of the acres of land in the district failed to vote in favor of the improvement of any road or roads proposed to be improved, shall, from and after the taking effect of this law, by the name mentioned in the preliminary order of the county commission establishing it, be a political subdivision of the state for governmental purposes with all the powers mentioned in sections 233.170 to 233.315 and such others as may from time to time be given by law, and shall, after the taking effect of sections 233.170 to 233.315, proceed, and shall have and exercise, and the commissioners and landowners and voters thereof shall have and exercise, the same privileges, powers and duties as if such district was incorporated after the taking effect of sections 233.170 to 233.315 and under and in accordance with sections 233.170 to 233.315; except that valid contracts made or entered into before the taking effect of sections 233.170 to 233.315, under laws hereby repealed, shall be complied with the same as if such laws were still in force; and except that any such district in which there has been a meeting of landowners of the district, in compliance with laws repealed by sections 233.170 to 233.315, at which owners of a majority of the acres of land in the district voted that any road or roads therein be improved and the cost thereof charged against the lands in the district, may proceed, and the commissioners thereof may proceed in making such improvement, and tax bills, or bonds may be issued and collected on account of such improvement, in the same manner as if the laws repealed by sections 233.170 to 233.315 were still in force and effect and sections 233.170 to 233.315 not yet in effect; but in case no contract for such improvement has been entered into, or tax bills or bonds issued by reason of such vote for such improvement, such district, and the commissioners and landowners thereof may, in making such improvement or issuing tax bills or bonds on account thereof, proceed as if such district had not been incorporated until after the taking effect of sections 233.170 to 233.315, and was incorporated under and in compliance with sections 233.170 to 233.315; or said special road district commissioners may file with the clerk of the county commission the tabulated statement or statements of the lands in the district as prepared previous to such meeting, and, if they have not done so already, make out and file with the clerk of the county commission a report of the action of the landowners at such meeting, signed and acknowledged by them, and the clerk of the county commission, after such report and tabulated statement are so filed, shall give notice, by at least two publications in some weekly newspaper published in the county, that said special road district commissioners have filed with him a report of an election in such district, and a tabulated statement of the lands in the district, showing the valuations fixed by them on each tract thereof for the purposes of an assessment for road improvement voted upon at such meeting, and such notice shall state a day not less than two weeks later than the date of the first publication of such notice, upon which the county commission will be in session and will hear and consider exceptions and objections to such report and tabulated statement and to the valuations so fixed on any or all tracts of land in the district, and the county commission shall, upon said day or as soon thereafter as the business of the county commission will permit, hear and consider any objections or exceptions that may be made to such report, and at such hearing such report shall be prima facie evidence of the statements therein made, and the county commission, if no objections or exceptions are made to such report, or if it find, after considering and hearing any objections that may be so made, and any evidence that may be offered, that such special road district commissioners prior to such meeting, and at such meeting, proceeded in compliance with the law then in force, and called such meeting and gave notice thereof in compliance with the law then in force, and that the action of the landowners at such meeting was as stated in such report, the county commission shall hear and consider such objections and exceptions as may be made to such tabulated statement or to valuations fixed on lands in the district as in such tabulated statement indicated, and, after hearing and considering such objections and exceptions, and such evidence as may be offered, shall make any alterations and corrections of said tabulated statement, and of the valuations so fixed and indicated, or fix such valuations on any of such lands, as it may deem proper, and shall thereupon approve such tabulated statement, and the valuations indicated therein, and order the clerk of the county commission to annex to said tabulated statement a certificate of such approval, and thereafter such district, and the special road district commissioners thereof, and the clerk of the county commission, in making such improvement and contracting for the same, or in issuing tax bills to pay for the same, or issuing bonds or tax bills to pay such bonds, may proceed as if this law had not taken effect, and the laws hereby repealed still in effect, except that the special road district commissioners need not make out and certify to the county clerk a description of the lands in the district as required by laws hereby repealed, and the county clerk in apportioning against each tract of land in the district its share of the cost of the improvement or its share of the principal and interest on the bonds, shall use, for the purpose of making such apportionment, such tabulated statement as so approved by the commission.
+
+
+** The CS reaction to this text
+
+This has the nature of object code: it was compiled from something, but from what exactly?
+
+* Example 2
+
+** Here are some other legal sentences:
+
+(from https://www.ycombinator.com/documents, cap & discount)
+
+*** Equity Financing.
+
+- If there is an Equity Financing
+- before the termination of this Safe,
+- on the initial closing of such Equity Financing,
+- this Safe will automatically convert into
+- the number of shares of Safe Preferred Stock equal to
+- the Purchase Amount divided by the Conversion Price.
+
+*** Liquidity Event.
+
+- If there is a Liquidity Event
+- before the termination of this Safe,
+- this Safe will automatically be entitled
+- (subject to the liquidation priority set forth in Section 1(d) below) to
+- receive a portion of Proceeds,
+- due and payable to the Investor
+- immediately prior to, or concurrent with,
+- the consummation of such Liquidity Event,
+- equal to the greater of
+- (i) the Purchase Amount (the “Cash-Out Amount”) or
+- (ii) the amount payable on
+  - the number of shares of Common Stock equal to
+  - the Purchase Amount divided by the Liquidity Price
+  - (the “Conversion Amount”).
+
+*** Dissolution Event.
+
+- If there is a Dissolution Event
+- before the termination of this Safe,
+- the Investor will automatically be entitled
+  - (subject to the liquidation priority set forth in Section 1(d) below)
+- to receive a portion of Proceeds equal to
+- the Cash-Out Amount,
+- due and payable to the Investor
+- immediately prior to
+- the consummation of the Dissolution Event.
+
+** What structure do they have in common?
+
+*** If an Event E
+
+(defined elsewhere,) so we need some sort of language of constitutive rules / qualifying predicates / First-Order Logic
+
+*** occurs during state S
+
+so we need a logic of states and transitions, e.g. DFA or Petri Nets
+
+*** then party P must perform action A, with parameters V1, V2 ... V3
+
+where Vi is computed as some sort of expression of the form
+
+#+begin_src haskell
+  Vi = Va * Vb + (if Vc > Vd then Ve else Vf)
+#+end_src
+
+so, your basic MathLang -- in an OOP phrasing we would say
+
+#+begin_src python
+  party.action(Vi = Va * Vb + (Ve if Vc > Vd else Vf))
+#+end_src
+
+*** after delay D1, before deadline D2
+
+so we know we are dealing with timed automata; we can use  a temporal logic of some sort, think LTL/CTL
+
+** Example 3
+
+Above we've seen *regulative rules*, involving deontics and temporals.
+
+One more example to demonstrate *prescriptive rules*:
+
+https://500startups.app.box.com/s/8ybxx9y3bhk4mte50v7k (500's KISS, debt)
+
+*** Definitions.
+
+- (a) “Conversion Shares” shall mean:
+  - (i) with respect to a conversion pursuant to Section 2.1,
+    - shares of the Company’s Preferred Stock issued in the Next Equity Financing;
+    - provided, however, that,
+      - at the Company’s election,
+      - “Conversion Shares” with respect to a conversion pursuant to Section 2.1 shall mean
+        - shares of a Shadow Series;
+  - (ii) with respect to a conversion pursuant to Section 2.2,
+    - shares of the Company’s Common Stock; and
+  - (iii) with respect to a conversion pursuant to Section 2.3,
+    - shares of a newly created series of the Company’s Series Seed Preferred Stock,
+    - upon the terms and provisions set forth in the most recent version of the Series Seed documents posted at www.seriesseed.com
+      - (or if not so posted, as reasonably agreed by the Company and a Majority in Interest);
+    - provided that, for the avoidance of doubt,
+    - the Conversion Price shall be determined pursuant to Section 1(b)(iii).
+
+Here we see something that looks like a case statement.
+
+Interestingly, a particular expression may want access to its call stack -- it wants to know the context of its execution -- "with respect to a conversion pursuant to".
+
+And we see what looks like a library call to a procedure for "reasonably agreed by X and Y" which is presumably defined elsewhere.
+
+If we wanted to implement this in Haskell we might say something like
+
+#+begin_src haskell
+  conversionShares :: Context -> Company -> IO () -> Agreement -> Security
+  conversionShares context company internet thisAgreement =
+    case conversion context & section of
+      Section "2.1" ->
+        if WantShadow `elem` elections company
+        then mkSecurity(shadowSeries, price)
+        else mkSecurity(shares $ nextEquityFinancing $ conversion context, price)
+      Section "2.2" ->
+        mkSecurity(company.commonStock, price)
+      Section "2.3" ->
+        mkSecurity( company.seriesSeed & mkSeries (get internet $ "www.seriessseed.com" notFound404)
+                  , priceFrom (thisAgreement & getSection 1_b_iii))
+    where
+      notFound404 =
+        reasonablyAgreed company company.majorityInInterest (context { stack = "seriesSeed404" : stack context })
+#+end_src
+
+In L4 we would be writing a specification, not an implementation, but we would have a similar balance between the declarative and procedural paradigms in the code.
+
+* MSCD
+
+All this feels like an achievable goal because legal language is highly stylized.
+
+"MSCD" identifies categories of contract language.
+
+https://www.amazon.com/Manual-Style-Contract-Drafting/dp/1634259645
+
+https://drive.google.com/file/d/1gBKvWPDg2ZcQg_-EwpmkVNtmJNVjOIQu/view?usp=sharing
+
+If we think of each category as a type of sentence, we can apply GF's type-theoretic approach to grammar composition.
+
+#+begin_src gf
+  Sentence ;
+  RegulativeRule -> Sentence ;
+  ConstitutiveRule -> Sentence ;
+
+    Event ->
+    Conditions ->
+    Party ->
+    Deontic ->
+    Action ActionParams -> ActionParams ->
+    Deadline
+    -> RegulativeRule ;
+
+    DefTerm ->
+    Context ->
+    Agreement
+    -> ConstitutiveRule ;
+
+#+end_src
+
+* Background -- GF and ACE
+
+Indeed, it turns out that people have been thinking about the logical structure of laws and contracts for a while.
+
+There are many formal approaches to rules:
+
+- CNLs :: [[https://github.com/tkuhn/AceRules][AceRules]]
+- Specification Languages :: Alloy, B / Z, TLA+
+- XML :: RuleML and LegalRuleML
+
+Of interest to the GF community, we see that there have been integrations between ACE and GF.
+
+(This is relevant to both the themes of our summer school, computational law and Abstract Wikipedia:)
+
+- http://attempto.ifi.uzh.ch/acewiki-gf/
+- https://github.com/Attempto/ACE-in-GF
+
+And Aarne has thought about this in the past:
+
+- [[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.230.9739][Translating between Language and Logic: What Is Easy and What Is Difficult]]
+
+
+* Let's look at some of the logic of laws and contracts in a little more detail.
+
+We'll visit some of the use cases currently in development at SMUCCLAW
+
+** Laws -- legislation & regulation
+
+*** Rule 34
+
+*** PDPA
+
+** Contracts
+
+*** YC SAFE
+
+** Let's look at the balance of regulative and constitutive rules
+
+Laws: less regulative, more constitutive
+
+Contracts: less constitutive, more regulative
+
+This is an oversimplification.
+
+References between contracts and laws.
+
+Laws as default rules in the absence of totality: see Nobel 2016.
+
+* Defeasible Logic
+
+- Notwithstanding X
+- Subject To X
+- Despite X
+
+What are the semantics of these defeasors, exactly?
+
+Guido Governatori's work; in particular, http:/digital-legislation.net/ -> https://research.csiro.au/bpli/
+
+* Default Logic
+
+- Reasoning under uncertainty
+- constructive logic
+- law of the excluded middle
+- two-valued vs three-valued logic
+- negation as failure
+- making reasonable assumptions
+
+Sarah Lawsky and Denis Merigoux's Catala
+
+* Application Domain: Taxes and Financial Regulations
+
+- https://hal.uca.fr/LIP6/hal-03002266v2
+- EU Tender
+
+* L4
+
+** The Status Quo
+
+- https://twitter.com/GTeninbaum/status/1421542513052114946
+
+** L4's Ambitions
+
+- the legal tech stack
+
+Architecture Diagram showing the ambitions
+
+*** Document Assembly
+
+Every year, another NDA template project:
+- https://legaltemplates.net/form/non-disclosure-agreement/
+- https://nondisclosureagreement.com/
+- https://github.com/CommonAccord/NW-NDA
+- https://commonform.org/waypoint/waypoint-nda/2e
+- https://twitter.com/OrlandoCabreraC/status/1397211965215363076
+- https://onenda.org/
+
+As you can see the situation is not that different to NPM. Indeed some of the above show up in NPM! https://www.npmjs.com/package/cmacc-form-nda
+
+/Opportunity for GF NLG:/ if templates are too chonky, let's use GF to establish isomorphism from the ground up, starting with the logic, semantics, and grammar.
+
+*** Web UI "Expert System"
+
+If you've seen DocAssemble you know there still is huge demand out there for expert systems, 50 years after they were invented.
+
+/Opportunity for GF NLG:/ auto-generate the interview text in multiple languages; transform declaratives from L4 into interrogatives and justifications in the UI.
+
+*** Generation of Laws and Contracts from first principles
+
+Translate laws and contracts from L4 to multiple natural languages
+
+- turn the drafting office into a compilation backend development shop
+- https://www.herbertsmithfreehills.com/latest-thinking/update-on-indonesian-language-requirements-for-contracts-with-indonesian-parties
+
+*** Reasoner; Formal Methods; Formal Verification
+
+/Opportunity for GF NLG:/ convert a SAT/SMT model to natural language; explain the trace in human-readable terms
+
+**** Where are the mistakes in this law?
+
+Non-monotonicity is the low-hanging fruit:
+- https://blog.merigoux.fr/en/2019/12/20/taxes-formal-proofs.html
+
+#+begin_quote
+This example could also have been discovered from a classic study on actual data, but the sample size required to randomly encounter such a situation is quite large. One of the strengths of this new method of analysis is therefore to effectively and reliably discover, and without any secret data the undesirable borderline cases induced by the socio-fiscal system.
+
+The SMT solver could also be used to find the exact linear slope to give to the stock exchange to avoid too high a marginal rate. But what does “too high”? 70 % ? More? Less? Moreover, the threshold effect is multiplied here by the number of children: to maintain a low marginal rate around the threshold, a linear slope will be required which decreases the less one wishes to cover the larger families. We see here that there is scope for a lot of political arbitration: the answers to the question “what is acceptable?” are highly subjective and the question itself is rife with tensions. However, once the political decision has been made, the SMT solver ensures whether the formula anr rules used for the calculation are in agreement with the principles decided by the legislator.
+#+end_quote
+
+**** Where are the mistakes in this contract?
+
+- http://www.cse.chalmers.se/~gersch/slides-talks/slides-ATVA-07.pdf
+
+
