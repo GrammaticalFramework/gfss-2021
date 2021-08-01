@@ -2,7 +2,7 @@
 
 Mostly motivations and challenges, some gestures toward a concrete syntax.
 
-Let's just jump right in.
+Let's just jump right in. Related slides at https://docs.google.com/presentation/d/1x7YNE4JGAks82LXdTGTBfQluzqatKgNAxHtfENsifIY/edit
 
 * Today's Goal
 
