@@ -1,8 +1,12 @@
 #+TITLE: Special Theme: Computational Law, L4, and NLG with GF
 
+Mostly motivations and challenges, some gestures toward a concrete syntax.
+
+Let's just jump right in.
+
 * Example 1
 
-A few years ago in Riga I shared a sentence with over a thousand words. I thought, wouldn't it be interesting to build a GF grammar for legal language? That would allow us to generate laws and contracts from some upstream representation in a high-level language. All we have to do is figure out the semantics and logic behind this kind of writing.
+A few years ago in Riga I shared a sentence over a thousand words long. I thought, wouldn't it be interesting to build a GF grammar for legal language? That would allow us to generate laws and contracts from some upstream representation in a high-level language. All we have to do is figure out the semantics and logic behind this kind of writing.
 
 ** Missouri
 
@@ -13,7 +17,7 @@ https://revisor.mo.gov/main/OneSection.aspx?section=233.285&bid=12522&hl=
 
 ** The CS reaction to this text
 
-This has the nature of object code: it was compiled from something, but from what exactly?
+This has the nature of object code: it was compiled from something, but from what exactly? It makes you want to go upstream, doesn't it?
 
 * Example 2
 
@@ -61,17 +65,15 @@ This has the nature of object code: it was compiled from something, but from wha
 
 ** What structure do they have in common?
 
-*** If an Event E
-
-(defined elsewhere,) so we need some sort of language of constitutive rules / qualifying predicates / First-Order Logic
-
-*** occurs during state S
+*** If an Event E occurs during state S
 
 so we need a logic of states and transitions, e.g. DFA or Petri Nets
 
+and because Events are defined in terms of primitive qualifiers, we need some sort of logic of constitutive rules / qualifying predicates / First-Order Logic
+
 *** then party P must perform action A, with parameters V1, V2 ... V3
 
-where Vi is computed as some sort of expression of the form
+where Vi may be computed as some sort of expression of the form
 
 #+begin_src haskell
   Vi = Va * Vb + (if Vc > Vd then Ve else Vf)
@@ -83,11 +85,15 @@ so, your basic MathLang -- in an OOP phrasing we would say
   party.action(Vi = Va * Vb + (Ve if Vc > Vd else Vf))
 #+end_src
 
+We also need a theory of Booleans.
+
 *** after delay D1, before deadline D2
 
-so we know we are dealing with timed automata; we can use  a temporal logic of some sort, think LTL/CTL
+so we know we are dealing with timed automata; we can use a temporal logic of some sort, think LTL/CTL
 
-** Did you notice the type error?
+** Did you notice the type error btw?
+
+Under Liquidity Event.
 
 * Example 3
 
@@ -145,7 +151,7 @@ In L4 we would be writing a specification, not an implementation, but we would h
 
 * MSCD
 
-All this feels like an achievable goal because legal language is highly stylized.
+This project is an achievable goal because legal language is highly stylized.
 
 "MSCD" identifies categories of contract language.
 
@@ -157,21 +163,22 @@ If we think of each category as a type of sentence, we can apply GF's type-theor
 
 #+begin_src gf
   Sentence ;
-  RegulativeRule -> Sentence ;
+
+    RegulativeRule -> Sentence ;
   ConstitutiveRule -> Sentence ;
 
-    Event ->
-    Conditions ->
-    Party ->
-    Deontic ->
-    Action ActionParams -> ActionParams ->
-    Deadline
-    -> RegulativeRule ;
+        Event
+     -> Conditions
+     -> Party
+     -> Deontic
+     -> Action ActionParams -> ActionParams
+     -> Deadline
+  -> RegulativeRule ;
 
-    DefTerm ->
-    Context ->
-    Agreement
-    -> ConstitutiveRule ;
+     DefTerm
+     -> Context
+     -> Agreement
+  -> ConstitutiveRule ;
 
 #+end_src
 
@@ -205,11 +212,41 @@ We'll visit some of the use cases currently in development at SMUCCLAW
 
 *** Rule 34
 
+- https://sso.agc.gov.sg/SL/LPA1966-S706-2015?DocDate=20180209&ValidDate=20180212&ProvIds=P13-#pr34-
+- https://github.com/smucclaw/baby-l4/blob/main/l4/r34.l4
+- https://github.com/smucclaw/sandbox/blob/default/jacobtan/Rule34-logic-gates/
+- https://github.com/smucclaw/sandbox/blob/default/jacobtan/Rule34-logic-gates/rule34-haskell/src/Rule34.hs#L257
+
+Next steps: to improve GF integration: as an alternative to the ~toEnglish~ code, use PGF to interface with the L4 application grammar.
+
+Add defeasibility to the SF-L4 version.
+
 *** PDPA
+- https://drive.google.com/file/d/1uxntfz1l2nuL2bbZuQnAz75cnbc_vcDy/view?usp=sharing
+- https://drive.google.com/file/d/1vIpdwZWnZg6ZKWzJPdGr8mAUZfs_84tN/view?usp=sharing
+- https://drive.google.com/file/d/1ut9hEdmfWs5I3OWeRp7EfMf78fEn6ZfF/view?usp=sharing
+- https://drive.google.com/file/d/1uwwy6ZiJzTOypK1eCaXDjxDaOkKcS7lF/view?usp=sharing
+- https://github.com/smucclaw/baby-l4/blob/pdpa-usecase/l4/pdpa-sf.l4
+
+Next steps: continue the SF L4 version to complete the encoding.
+
+Write parser using MegaParsec.
+
+Write parser using alex/happy.
+
+Following SDDD philosophy, develop type system to represent internal semantics.
+
+Have parser hydrate AST to the semantic types.
+
+Write pipeline component to output the types to existing output channels, e.g. visualization.
 
 ** Contracts
 
 *** YC SAFE
+
+- https://github.com/smucclaw/dsl/blob/main/caseStudies/YCsafePost/
+
+Revise SF L4 to represent SAFE properly.
 
 ** Let's look at the balance of regulative and constitutive rules
 
@@ -243,6 +280,61 @@ Guido Governatori's work; in particular, http:/digital-legislation.net/ -> https
 - making reasonable assumptions
 
 Sarah Lawsky and Denis Merigoux's Catala
+
+* A Logic of Consensus
+
+Often the best way to evaluate a ground term is to ask a human.
+
+Was a delay "as soon as practicable"?
+
+Were efforts "best" or "reasonable"?
+https://www.jonesday.com/en/insights/2007/07/best-efforts-and-endeavourscase-analysis-and-practical-guidance-under-us-and-uk-law
+
+Who knows? The computer doesn't. Parties still have to do some of the thinking -- and the guessing -- for themselves.
+
+But there is a difference between vagueness and ambiguity:
+
+* Vagueness and Ambiguity
+
+** Deontic vs Alethic modals
+
+"You can't give these plants too much water"
+
+"You can't give these plants too much water"
+
+** and: Conjunction? Set union?
+
+"An ingredient is Popular if it is listed in Tables A, B, C, and D."
+
+| A       | B      | C              | D      |
+|---------+--------+----------------+--------|
+| peppers | milk   | Hollandaise    | potato |
+| Chorizo | flour  | English muffin | butter |
+| egg     | egg    | egg            | egg    |
+| onion   | butter | ham            | bread  |
+
+"An ingredient is Banned if it is listed in Tables A, B, C, and D."
+
+| A       | C         | D          | B                |
+|---------+-----------+------------+------------------|
+| peanuts | aspartame | Olestra    | Green No 3       |
+| walnuts | saccharin | trans fats | Quinoline Yellow |
+|         | sucralose |            | Carmoisine       |
+|         | sorbitol  |            | Ponceau          |
+
+** any: Existential / Universal Quantification?
+
+| Existential                      | Universal                                   |
+|----------------------------------+---------------------------------------------|
+| Choose any ice cream on the list | Shoot any zombie who comes through the door |
+
+** or: Inclusive? Exclusive?
+
+"Do these examples actually cause problems in the real world?"
+
+"Or are you trying to be clever?"
+
+"Yes"
 
 * Application Domain: Taxes and Financial Regulations
 
