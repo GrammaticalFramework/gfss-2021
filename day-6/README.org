@@ -4,6 +4,20 @@ Mostly motivations and challenges, some gestures toward a concrete syntax.
 
 Let's just jump right in.
 
+* Today's Goal
+
+Build:
+- an application grammar in GF
+- integrating via PGF with
+- a Haskell type system representing the core semantics of laws and contracts
+- initially expressed in a simple embedded DSL
+- with potential for an external concrete syntax via a compiler front-end
+
+* Format
+
+- Morning :: 2 hours for background and examples; start gathering an inventory of clues, requirements, and assets toward the goal
+- Afternoon :: 2 hours to start implementing a toy example of the above goals
+
 * Example 1
 
 A few years ago in Riga I shared a sentence over a thousand words long. I thought, wouldn't it be interesting to build a GF grammar for legal language? That would allow us to generate laws and contracts from some upstream representation in a high-level language. All we have to do is figure out the semantics and logic behind this kind of writing.
@@ -436,4 +450,8 @@ Multiple equivalent phrasings of the same underlying logic:
 - seven
 
 
+
+* Afternoon
+
+Start implementing; what code do we need to write?
 
