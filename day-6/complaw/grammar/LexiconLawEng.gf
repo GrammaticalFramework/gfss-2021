@@ -9,6 +9,8 @@ open ParadigmsEng, SyntaxEng, DictEng, IrregEng, ExtraEng in {
         -- Event
         Always = always_AdV ;
 
+        Upon cn = lin AdV (mkAdv (mkPrep "upon") (mkNP cn)) ;
+
         -- Deadline
         Now = now_Adv ;
 
@@ -21,7 +23,8 @@ open ParadigmsEng, SyntaxEng, DictEng, IrregEng, ExtraEng in {
 
         -- Kind
         Organisation = mkCN (mkN "organisation") ;
---        DataBreach, DataLeak, Harm : Kind ;
+        DataBreach = mkCN (mkN "data breach") ;
+        Sunrise = mkCN (mkN "sunrise") ;
 
         -- Quality
         AsSoonAsPrac = ParadigmsEng.mkAdv "as soon as practicable" ;

@@ -7,6 +7,7 @@ abstract LexiconLaw = BaseLaw [Pred1, Pred2, Kind, Item, Quality, Modal] ** {
 
         -- Event
         Always : Event ;
+        Upon : Kind -> Event ;
 
         -- Deadline
         Now : Deadline ;
@@ -19,8 +20,10 @@ abstract LexiconLaw = BaseLaw [Pred1, Pred2, Kind, Item, Quality, Modal] ** {
         PDPC : Item ;
 
         -- Kind
-        Organisation,
-        DataBreach, DataLeak, Harm : Kind ;
+        Organisation : Kind ;
+
+        -- ones used for events
+        Sunrise, DataBreach, DataLeak : Kind ;
 
         -- Quality
         AsSoonAsPrac : Quality ;
