@@ -31,7 +31,7 @@ packages:
     hackage: prettyprinter-1.7.0@sha256:6a9569e21fa61163a7f066d23d701e23e917893e8f39733d6e617ec72787ae5f,6007
 snapshots:
 - completed:
-    size: 532177
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/16/20.yaml
-    sha256: 0e14ba5603f01e8496e8984fd84b545a012ca723f51a098c6c9d3694e404dc6d
-  original: lts-16.20
+    size: 585817
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/5.yaml
+    sha256: 22d24d0dacad9c1450b9a174c28d203f9bb482a2a8da9710a2f2a9f4afee2887
+  original: lts-18.5
