@@ -1,0 +1,28 @@
+resolver: lts-16.20
+
+packages:
+  - .
+
+extra-deps:
+  - github: GrammaticalFramework/gf-core
+    commit: eeda03e9b065ee74905b6d593aa88912c78ef8bb
+  - json-0.10@sha256:d9fc6b07ce92b8894825a17d2cf14799856767eb30c8bf55962baa579207d799,3210
+  - prettyprinter-1.7.0@sha256:6a9569e21fa61163a7f066d23d701e23e917893e8f39733d6e617ec72787ae5f,6007
+
+# Required for the option custom-preprocessor-extensions
+require-stack-version: ">= 2.7.1"
+# This will show a warning
+custom-preprocessor-extensions:
+- gf
+
+flags:
+  # this excludes PGF2 module in gf package
+  gf:
+    c-runtime: false
+    server: false
+  regex-posix:
+    _regex-posix-clib: true
+
+# nix:
+#   enable: true
+#   pure: false
