@@ -1,4 +1,4 @@
-abstract LexiconLaw = BaseLaw [Pred1, Pred2, Kind, Item, Quality, Modal] ** {
+abstract LexiconLaw = BaseLaw ** {
     fun
         -- Deontic
         Should,
@@ -14,7 +14,7 @@ abstract LexiconLaw = BaseLaw [Pred1, Pred2, Kind, Item, Quality, Modal] ** {
 
         -- Predicates
         Notify : Pred2 ;      -- notify PDPC
-        MakeAssessment : Pred1 ; -- MWE
+        MakeAssessment : Action ; -- MWE
 
         -- Item
         PDPC : Item ;
@@ -25,6 +25,5 @@ abstract LexiconLaw = BaseLaw [Pred1, Pred2, Kind, Item, Quality, Modal] ** {
         -- ones used for events
         Sunrise, DataBreach, DataLeak : Kind ;
 
-        -- Quality
-        AsSoonAsPrac : Quality ;
+        AsSoonAsPrac : Deadline ;
 }

@@ -18,7 +18,6 @@ abstract BaseLaw = {
 
         Quality ; -- Significant, [as soon as practicable]
 
-        Pred1 ; -- [make an assessment]: a multi-word expression
         Pred2 ; -- notify
         Modal ; -- May, Shoud, Must, NoModal
 
@@ -39,7 +38,6 @@ abstract BaseLaw = {
 
     -- Make Actions
     Compl : Pred2 -> Item -> Action ; -- notify PDPC
-    Use : Pred1 -> Action ;      -- sleep
 
     -- Modify an Action
     ModAction :

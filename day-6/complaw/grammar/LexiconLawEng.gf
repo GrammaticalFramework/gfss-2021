@@ -1,5 +1,5 @@
-concrete LexiconLawEng of LexiconLaw = BaseLawEng [Pred1, Pred2, Kind, Item, Quality, Modal] **
-open ParadigmsEng, SyntaxEng, DictEng, IrregEng, ExtraEng in {
+concrete LexiconLawEng of LexiconLaw = BaseLawEng **
+open ParadigmsEng, SyntaxEng, DictEng, IrregEng, ExtraEng, ExtendEng in {
     lin
         -- Deontic
         Should = DictEng.should_VV ;
@@ -14,9 +14,14 @@ open ParadigmsEng, SyntaxEng, DictEng, IrregEng, ExtraEng in {
         -- Deadline
         Now = now_Adv ;
 
-        -- Predicates
+        -- Pred2
         Notify = mkV2 "notify" ;
-        MakeAssessment = mkVP (mkV2 IrregEng.make_V) (mkNP a_Det (mkN "assessment")) ;
+
+        -- Action
+        MakeAssessment = {
+          s = MkVPI (mkVP (mkV2 IrregEng.make_V) (mkNP a_Det (mkN "assessment"))) ;
+          adv = emptyAdv
+          } ;
 
         -- Item
         PDPC = mkNP (mkPN "PDPC") ;
