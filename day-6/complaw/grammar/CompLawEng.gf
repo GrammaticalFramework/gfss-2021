@@ -1,0 +1,1 @@
+concrete CompLawEng of CompLaw = BaseLawEng, LexiconLawEng ;
