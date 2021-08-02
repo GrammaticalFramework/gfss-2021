@@ -268,11 +268,9 @@ Laws: less regulative, more constitutive
 
 Contracts: less constitutive, more regulative
 
-This is an oversimplification.
+This is, of course, an oversimplification.
 
-References between contracts and laws.
-
-Laws as default rules in the absence of totality: see Nobel 2016.
+References between contracts and laws -- laws as default rules in the absence of totality: see Nobel 2016.
 
 * Defeasible Logic
 
@@ -314,7 +312,11 @@ But there is a difference between vagueness and ambiguity:
 
 "You can't give these plants too much water"
 
+you should not, must not, may not, overwater the plants.
+
 "You can't give these plants too much water"
+
+there is no amount of water that is too much for this plant.
 
 ** and: Conjunction? Set union?
 
@@ -327,6 +329,8 @@ But there is a difference between vagueness and ambiguity:
 | egg     | egg    | egg            | egg    |
 | onion   | butter | ham            | bread  |
 
+&&
+
 "An ingredient is Banned if it is listed in Tables A, B, C, and D."
 
 | A       | C         | D          | B                |
@@ -336,11 +340,14 @@ But there is a difference between vagueness and ambiguity:
 |         | sucralose |            | Carmoisine       |
 |         | sorbitol  |            | Ponceau          |
 
+U
+
 ** any: Existential / Universal Quantification?
 
 | Existential                      | Universal                                   |
 |----------------------------------+---------------------------------------------|
 | Choose any ice cream on the list | Shoot any zombie who comes through the door |
+|        one                       |       all                                   |
 
 ** or: Inclusive? Exclusive?
 
