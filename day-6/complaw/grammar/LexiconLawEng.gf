@@ -1,5 +1,5 @@
 concrete LexiconLawEng of LexiconLaw = BaseLawEng **
-open ParadigmsEng, SyntaxEng, DictEng, IrregEng, ExtraEng, ExtendEng in {
+open Prelude, ParadigmsEng, SyntaxEng, DictEng, IrregEng, ExtraEng in {
     lin
         -- Deontic
         Should = DictEng.should_VV ;
@@ -7,9 +7,15 @@ open ParadigmsEng, SyntaxEng, DictEng, IrregEng, ExtraEng, ExtendEng in {
         May = ExtraEng.may_VV ;
 
         -- Event
-        Always = always_AdV ;
+        Always = {
+           s = always_AdV ;
+           isAdV = True
+           } ;
 
-        Upon cn = lin AdV (mkAdv (mkPrep "upon") (mkNP cn)) ;
+        Upon cn = {
+           s = mkAdv (mkPrep "upon") (mkNP cn) ;
+           isAdV = False ;
+           } ;
 
         -- Deadline
         Now = now_Adv ;
@@ -18,10 +24,7 @@ open ParadigmsEng, SyntaxEng, DictEng, IrregEng, ExtraEng, ExtendEng in {
         Notify = mkV2 "notify" ;
 
         -- Action
-        MakeAssessment = {
-          s = MkVPI (mkVP (mkV2 IrregEng.make_V) (mkNP a_Det (mkN "assessment"))) ;
-          adv = emptyAdv
-          } ;
+        MakeAssessment = mkAction (mkVP (mkV2 IrregEng.make_V) (mkNP a_Det (mkN "assessment"))) ;
 
         -- Item
         PDPC = mkNP (mkPN "PDPC") ;

@@ -1,8 +1,8 @@
-concrete BaseLawEng of BaseLaw = open Prelude, SyntaxEng, LexiconEng, ExtendEng in {
+concrete BaseLawEng of BaseLaw = open Prelude, SyntaxEng, LexiconEng, ExtendEng, SentenceEng in {
   lincat
     Phrase = Text ;
 
-    Event = AdV ;
+    Event = LinEvent ;
     Deadline = Adv ;
 
     Proposition = LinProp ;
@@ -17,7 +17,6 @@ concrete BaseLawEng of BaseLaw = open Prelude, SyntaxEng, LexiconEng, ExtendEng 
 
     Quality = Adv ; -- Significant, [as soon as practicable]
 
-    Pred1 = VP ; -- [make an assessment]: a multi-word expression
     Pred2 = V2 ; -- notify
     Modal = VV ; -- May, Shoud, Must, NoModal
 
@@ -25,8 +24,8 @@ concrete BaseLawEng of BaseLaw = open Prelude, SyntaxEng, LexiconEng, ExtendEng 
   lin
     -- Build different speech acts
     -- : Proposition -> Phrase ;
-    QProp ev prop dl = mkText (mkUtt (mkQS (pr2cl ev dl prop))) questMarkPunct ;  -- makes Proposition into question phrase
-    SProp ev prop dl = mkText (mkUtt (mkS (pr2cl ev dl prop))) fullStopPunct ;         -- makes Proposition into statement phrase
+--    QProp ev prop dl = mkText (mkUtt (mkQS (pr2cl ev dl prop))) questMarkPunct ;  -- makes Proposition into question phrase
+    SProp ev prop dl = mkText (mkUtt (pr2s ev dl prop)) fullStopPunct ;         -- makes Proposition into statement phrase
 
     -- Make a Proposition
     -- : Item -> Deontic -> Proposition ;
@@ -39,9 +38,6 @@ concrete BaseLawEng of BaseLaw = open Prelude, SyntaxEng, LexiconEng, ExtendEng 
     -- Make Actions
     -- : Pred2 -> Item -> Action ; -- notify PDPC
     Compl pred2 item = mkAction (mkVP pred2 item) ;
-
-    --  : Pred1 -> Action ;      -- sleep
-    Use = mkAction ;
 
     -- Modify an Action
     --  Action -> Quality -> Action ;
@@ -63,13 +59,21 @@ concrete BaseLawEng of BaseLaw = open Prelude, SyntaxEng, LexiconEng, ExtendEng 
     ConjAction as = {s = ConjVPI and_Conj as ; adv = emptyAdv} ;
 
   oper
+    LinEvent = {
+      s : Adv ;
+      isAdV : Bool
+    } ;
+
     LinProp : Type = {
       subj : NP ;
       pred : VP
       } ;
 
-    pr2cl : AdV -> Adv -> LinProp -> Cl = \ev,dl,prop ->
-      mkCl prop.subj (mkVP (mkVP ev prop.pred) dl) ;
+    pr2s : LinEvent -> Adv -> LinProp -> S = \ev,dl,prop ->
+      case ev.isAdV of {
+        True => mkS (mkCl prop.subj (mkVP (mkVP <ev.s : AdV> prop.pred) dl)) ;
+        False => ExtAdvS ev.s (mkS (mkCl prop.subj (mkVP prop.pred dl)))
+      } ;
 
     LinAction : Type = {
       s : VPI ;    -- notify PDPC
