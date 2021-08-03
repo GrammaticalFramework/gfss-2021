@@ -460,5 +460,25 @@ Multiple equivalent phrasings of the same underlying logic:
 
 * Afternoon
 
-Start implementing; what code do we need to write?
+To get everything working, I had to do this:
+
+(where GF_LIB_PATH is already set up correctly)
+
+#+begin_example
+  ┌─[mengwong@solo-wmw-2] - [~/src/gf/gf-rgl/src/english] - [2021-08-03 11:45:01]
+  └─[0] <git:(master 2bb3630f✈) > gf -make --gfo-dir=$GF_LIB_PATH DictEng.gf
+
+  ┌─[mengwong@solo-wmw-2] - [~/src/smucclaw/gfss-2021/day-6/complaw/src] - [2021-08-03 11:46:16]
+  └─[0] <git:(main ee6dec7✈) > gf -make -f haskell --haskell=noprefix --haskell=lexical --lexical=Kind,Event,Deadline,Modal ../grammar/CompLawEng.gf
+#+end_example
+
+(If you find yourself having to explicitly specify --gf-lib-path it is possible you installed gf via nix which seems to ignore GF_LIB_PATH)
+
+This is what a successful run looks like:
+
+#+begin_example
+  ┌─[mengwong@solo-wmw-2] - [~/src/smucclaw/gfss-2021/day-6/complaw] - [2021-08-03 01:19:20]
+  └─[0] <git:(main ee6dec7✱✈) > stack run
+  upon sunrise , the organisation must make an assessment as soon as practicable .
+#+end_example
 
