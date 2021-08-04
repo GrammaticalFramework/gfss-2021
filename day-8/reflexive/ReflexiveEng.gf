@@ -3,11 +3,14 @@ concrete ReflexiveEng of Reflexive = {
     N = Noun ;
     NP = NounPhrase ;
     VP = VerbPhrase ;
+    V2 = Verb ;
 
   lin
     --  : NP -> VP -> S ; -- I eat food ; you see yourself
     PredVPS np vp = {
-      s = np.s ! Nom ++ vp.s ++ vp.compl ! np.a
+      s = np.s ! Nom ++
+          vp.s ! agr2vf np.a ++
+          vp.compl ! np.a
     } ;
 
     -- : V2 -> NP -> VP ; -- eat food, see you
@@ -46,8 +49,8 @@ concrete ReflexiveEng of Reflexive = {
 
     -- Lexicon
 
-    see_V2 = mkV2 "saw" ;
-    eat_V2 = mkV2 "ate" ;
+    see_V2 = mkV2 "see" ;
+    eat_V2 = mkV2 "eat" ;
     cat_N  = mkN "cat" ;
     food_N = mkN "food" ;
 
@@ -56,7 +59,15 @@ concrete ReflexiveEng of Reflexive = {
     Gender = Fem | Masc | Neutr | Inanimate ;
     Case = Nom | Acc ;
     Number = Sg | Pl ;
+    VForm = Sg3VF | OtherVF ;
+
   oper
+    agr2vf : Agr -> VForm = \a -> case a of {
+      Sg3 Neutr => OtherVF ;
+      Sg3 _ => Sg3VF ;
+      _     => OtherVF
+    } ;
+
     Noun : Type = {
       s : Number => Str
       } ;
@@ -64,12 +75,19 @@ concrete ReflexiveEng of Reflexive = {
       s : Case => Str ;
       a : Agr
       } ;
+    Verb : Type = {
+      s : VForm => Str ;
+      } ;
     VerbPhrase : Type = {
-      s : Str ;   -- simplification: only past tense (saw, ate)
+      s : VForm => Str ;   -- see, sees
       compl : Agr => Str ; -- myself/yourself/…
     } ;
 
-    mkV2 : Str -> {s : Str} = \s -> {s=s} ;
+    mkV2 : Str -> Verb = \s -> {
+      s = table {
+        Sg3VF => s + "s" ;
+        _ => s
+      }} ;
 
     mkN : Str -> Noun = \food -> {
       s = table {

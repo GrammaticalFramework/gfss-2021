@@ -88,11 +88,59 @@ V2 -> 'saw' | 'ate'
 """)
 parser2 = parse.FeatureEarleyChartParser(grammar2)
 
-
 print("\n\n\n# Grammar 2")
 print(grammar2)
 
 printGrammatical(parser2, sentencesGood)
 printUngrammatical(parser2, sentencesBad)
 
+## Added present tense
 
+sentencesGood = [
+    'the cat eats food',
+    'I see the cat',
+    'the cat sees me',
+    'you see yourself',
+    'the cat sees itself']
+
+sentencesBad = [
+    'I see itself',
+    'the cat sees myself',
+    'yourself see the cat',
+    'myself see I',
+    'the cat sees I']
+
+grammar3 = grammar.FeatureGrammar.fromstring("""
+% start S
+# S expansion productions
+S -> SubjNP[] VP[]
+S -> SubjNP[PER=?p] V2 ReflNP[PER=?p]
+
+# NP expansion productions
+ReflNP[PER=sg1] -> 'myself'
+ReflNP[PER=sg2] -> 'yourself'
+ReflNP[PER=sg3] -> 'itself'
+
+SubjNP[PER=sg1] -> 'I'
+SubjNP[PER=sg2] -> 'you'
+SubjNP[PER=sg3] -> Det N | 'food'
+ObjNP -> Det N | 'food'
+ObjNP -> 'me'
+
+# VP expansion productions
+VP[PER=?n] -> V2[PER=?n] ObjNP
+
+# Lexicon
+Det -> 'the'
+N -> 'dog' | 'cat'
+V2[PER='sg3'] -> 'sees' | 'eats'
+V2 -> 'see' | 'eat'
+
+""")
+parser3 = parse.FeatureEarleyChartParser(grammar3)
+
+print("\n\n\n# Grammar 3")
+print(grammar3)
+
+printGrammatical(parser3, sentencesGood)
+printUngrammatical(parser3, sentencesBad)
