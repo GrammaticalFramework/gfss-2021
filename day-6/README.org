@@ -318,6 +318,14 @@ you should not, must not, may not, overwater the plants.
 
 there is no amount of water that is too much for this plant.
 
+** if vs iff
+
+a classic criticism of classical logic: if the moon is full, then the ocean is wet.
+
+ordinary intuition: if as iff -- if-and-only-if; vs material implication
+
+(and even then, x => y is sometimes better understood as ~if y then x~ and sometimes as ~if x then y~)
+
 ** and: Conjunction? Set union?
 
 "An ingredient is Popular if it is listed in Tables A, B, C, and D."
@@ -329,7 +337,7 @@ there is no amount of water that is too much for this plant.
 | egg     | egg    | egg            | egg    |
 | onion   | butter | ham            | bread  |
 
-&&
+~&&~
 
 "An ingredient is Banned if it is listed in Tables A, B, C, and D."
 
@@ -340,7 +348,7 @@ there is no amount of water that is too much for this plant.
 |         | sucralose |            | Carmoisine       |
 |         | sorbitol  |            | Ponceau          |
 
-U
+~U~
 
 ** any: Existential / Universal Quantification?
 
