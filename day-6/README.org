@@ -318,6 +318,14 @@ you should not, must not, may not, overwater the plants.
 
 there is no amount of water that is too much for this plant.
 
+** if vs iff
+
+a classic criticism of classical logic: if the moon is full, then the ocean is wet.
+
+ordinary intuition: if as iff -- if-and-only-if; vs material implication
+
+(and even then, x => y is sometimes better understood as ~if y then x~ and sometimes as ~if x then y~)
+
 ** and: Conjunction? Set union?
 
 "An ingredient is Popular if it is listed in Tables A, B, C, and D."
@@ -329,7 +337,7 @@ there is no amount of water that is too much for this plant.
 | egg     | egg    | egg            | egg    |
 | onion   | butter | ham            | bread  |
 
-&&
+~&&~
 
 "An ingredient is Banned if it is listed in Tables A, B, C, and D."
 
@@ -340,7 +348,7 @@ there is no amount of water that is too much for this plant.
 |         | sucralose |            | Carmoisine       |
 |         | sorbitol  |            | Ponceau          |
 
-U
+~U~
 
 ** any: Existential / Universal Quantification?
 
@@ -460,5 +468,25 @@ Multiple equivalent phrasings of the same underlying logic:
 
 * Afternoon
 
-Start implementing; what code do we need to write?
+To get everything working, I had to do this:
+
+(where GF_LIB_PATH is already set up correctly)
+
+#+begin_example
+  ┌─[mengwong@solo-wmw-2] - [~/src/gf/gf-rgl/src/english] - [2021-08-03 11:45:01]
+  └─[0] <git:(master 2bb3630f✈) > gf -make --gfo-dir=$GF_LIB_PATH DictEng.gf
+
+  ┌─[mengwong@solo-wmw-2] - [~/src/smucclaw/gfss-2021/day-6/complaw/src] - [2021-08-03 11:46:16]
+  └─[0] <git:(main ee6dec7✈) > gf -make -f haskell --haskell=noprefix --haskell=lexical --lexical=Kind,Event,Deadline,Modal ../grammar/CompLawEng.gf
+#+end_example
+
+(If you find yourself having to explicitly specify --gf-lib-path it is possible you installed gf via nix which seems to ignore GF_LIB_PATH)
+
+This is what a successful run looks like:
+
+#+begin_example
+  ┌─[mengwong@solo-wmw-2] - [~/src/smucclaw/gfss-2021/day-6/complaw] - [2021-08-03 01:19:20]
+  └─[0] <git:(main ee6dec7✱✈) > stack run
+  upon sunrise , the organisation must make an assessment as soon as practicable .
+#+end_example
 

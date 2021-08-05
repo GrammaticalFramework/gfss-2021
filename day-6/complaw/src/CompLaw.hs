@@ -41,122 +41,135 @@ instance Gf GFloat where
 -- below this line machine-generated
 ----------------------------------------------------
 
-data GAction =
-   GCompl GPred2 GItem 
- | GConjAction GListAction 
- | GModAction GAction GQuality 
- | GUse GPred1 
+data Action =
+   Compl Pred2 Item 
+ | ConjAction ListAction 
+ | MakeAssessment 
+ | ModAction Action Quality 
   deriving Show
 
-data GDeontic = GModalAction GModal GAction 
+data Deadline =
+   LexDeadline String
   deriving Show
 
-data GItem =
-   GAKind GKind 
- | GAPlKind GKind 
- | GConjItem GItem GItem 
- | GPDPC 
- | GTheSgKind GKind 
+data Deontic = ModalAction Modal Action 
   deriving Show
 
-data GKind =
-   GDataBreach 
- | GDataLeak 
- | GHarm 
- | GOrganisation 
+data Event =
+   Upon Kind 
+ | LexEvent String
   deriving Show
 
-newtype GListAction = GListAction [GAction] deriving Show
-
-data GModal =
-   GMay 
- | GMust 
- | GShould 
+data Item =
+   AKind Kind 
+ | APlKind Kind 
+ | ConjItem Item Item 
+ | PDPC 
+ | TheSgKind Kind 
   deriving Show
 
-data GPhrase =
-   GQProp GProposition 
- | GSProp GProposition 
+data Kind =
+   LexKind String
   deriving Show
 
-data GPred1 = GMakeAssessment 
+newtype ListAction = ListAction [Action] deriving Show
+
+data Modal =
+   LexModal String
   deriving Show
 
-data GPred2 = GNotify 
+data Phrase =
+   QProp Event Proposition Deadline 
+ | SProp Event Proposition Deadline 
   deriving Show
 
-data GProposition = GPred GItem GDeontic 
+data Pred2 = Notify 
   deriving Show
 
-data GQuality = GAsSoonAsPrac 
+data Proposition = Pred Item Deontic 
   deriving Show
 
+data Quality
 
-instance Gf GAction where
-  gf (GCompl x1 x2) = mkApp (mkCId "Compl") [gf x1, gf x2]
-  gf (GConjAction x1) = mkApp (mkCId "ConjAction") [gf x1]
-  gf (GModAction x1 x2) = mkApp (mkCId "ModAction") [gf x1, gf x2]
-  gf (GUse x1) = mkApp (mkCId "Use") [gf x1]
+
+instance Gf Action where
+  gf (Compl x1 x2) = mkApp (mkCId "Compl") [gf x1, gf x2]
+  gf (ConjAction x1) = mkApp (mkCId "ConjAction") [gf x1]
+  gf MakeAssessment = mkApp (mkCId "MakeAssessment") []
+  gf (ModAction x1 x2) = mkApp (mkCId "ModAction") [gf x1, gf x2]
 
   fg t =
     case unApp t of
-      Just (i,[x1,x2]) | i == mkCId "Compl" -> GCompl (fg x1) (fg x2)
-      Just (i,[x1]) | i == mkCId "ConjAction" -> GConjAction (fg x1)
-      Just (i,[x1,x2]) | i == mkCId "ModAction" -> GModAction (fg x1) (fg x2)
-      Just (i,[x1]) | i == mkCId "Use" -> GUse (fg x1)
+      Just (i,[x1,x2]) | i == mkCId "Compl" -> Compl (fg x1) (fg x2)
+      Just (i,[x1]) | i == mkCId "ConjAction" -> ConjAction (fg x1)
+      Just (i,[]) | i == mkCId "MakeAssessment" -> MakeAssessment 
+      Just (i,[x1,x2]) | i == mkCId "ModAction" -> ModAction (fg x1) (fg x2)
 
 
       _ -> error ("no Action " ++ show t)
 
-instance Gf GDeontic where
-  gf (GModalAction x1 x2) = mkApp (mkCId "ModalAction") [gf x1, gf x2]
+instance Gf Deadline where
+  gf (LexDeadline x) = mkApp (mkCId x) []
 
   fg t =
     case unApp t of
-      Just (i,[x1,x2]) | i == mkCId "ModalAction" -> GModalAction (fg x1) (fg x2)
+
+      Just (i,[]) -> LexDeadline (showCId i)
+      _ -> error ("no Deadline " ++ show t)
+
+instance Gf Deontic where
+  gf (ModalAction x1 x2) = mkApp (mkCId "ModalAction") [gf x1, gf x2]
+
+  fg t =
+    case unApp t of
+      Just (i,[x1,x2]) | i == mkCId "ModalAction" -> ModalAction (fg x1) (fg x2)
 
 
       _ -> error ("no Deontic " ++ show t)
 
-instance Gf GItem where
-  gf (GAKind x1) = mkApp (mkCId "AKind") [gf x1]
-  gf (GAPlKind x1) = mkApp (mkCId "APlKind") [gf x1]
-  gf (GConjItem x1 x2) = mkApp (mkCId "ConjItem") [gf x1, gf x2]
-  gf GPDPC = mkApp (mkCId "PDPC") []
-  gf (GTheSgKind x1) = mkApp (mkCId "TheSgKind") [gf x1]
+instance Gf Event where
+  gf (Upon x1) = mkApp (mkCId "Upon") [gf x1]
+  gf (LexEvent x) = mkApp (mkCId x) []
 
   fg t =
     case unApp t of
-      Just (i,[x1]) | i == mkCId "AKind" -> GAKind (fg x1)
-      Just (i,[x1]) | i == mkCId "APlKind" -> GAPlKind (fg x1)
-      Just (i,[x1,x2]) | i == mkCId "ConjItem" -> GConjItem (fg x1) (fg x2)
-      Just (i,[]) | i == mkCId "PDPC" -> GPDPC 
-      Just (i,[x1]) | i == mkCId "TheSgKind" -> GTheSgKind (fg x1)
+      Just (i,[x1]) | i == mkCId "Upon" -> Upon (fg x1)
+
+      Just (i,[]) -> LexEvent (showCId i)
+      _ -> error ("no Event " ++ show t)
+
+instance Gf Item where
+  gf (AKind x1) = mkApp (mkCId "AKind") [gf x1]
+  gf (APlKind x1) = mkApp (mkCId "APlKind") [gf x1]
+  gf (ConjItem x1 x2) = mkApp (mkCId "ConjItem") [gf x1, gf x2]
+  gf PDPC = mkApp (mkCId "PDPC") []
+  gf (TheSgKind x1) = mkApp (mkCId "TheSgKind") [gf x1]
+
+  fg t =
+    case unApp t of
+      Just (i,[x1]) | i == mkCId "AKind" -> AKind (fg x1)
+      Just (i,[x1]) | i == mkCId "APlKind" -> APlKind (fg x1)
+      Just (i,[x1,x2]) | i == mkCId "ConjItem" -> ConjItem (fg x1) (fg x2)
+      Just (i,[]) | i == mkCId "PDPC" -> PDPC 
+      Just (i,[x1]) | i == mkCId "TheSgKind" -> TheSgKind (fg x1)
 
 
       _ -> error ("no Item " ++ show t)
 
-instance Gf GKind where
-  gf GDataBreach = mkApp (mkCId "DataBreach") []
-  gf GDataLeak = mkApp (mkCId "DataLeak") []
-  gf GHarm = mkApp (mkCId "Harm") []
-  gf GOrganisation = mkApp (mkCId "Organisation") []
+instance Gf Kind where
+  gf (LexKind x) = mkApp (mkCId x) []
 
   fg t =
     case unApp t of
-      Just (i,[]) | i == mkCId "DataBreach" -> GDataBreach 
-      Just (i,[]) | i == mkCId "DataLeak" -> GDataLeak 
-      Just (i,[]) | i == mkCId "Harm" -> GHarm 
-      Just (i,[]) | i == mkCId "Organisation" -> GOrganisation 
 
-
+      Just (i,[]) -> LexKind (showCId i)
       _ -> error ("no Kind " ++ show t)
 
-instance Gf GListAction where
-  gf (GListAction [x1,x2]) = mkApp (mkCId "BaseAction") [gf x1, gf x2]
-  gf (GListAction (x:xs)) = mkApp (mkCId "ConsAction") [gf x, gf (GListAction xs)]
+instance Gf ListAction where
+  gf (ListAction [x1,x2]) = mkApp (mkCId "BaseAction") [gf x1, gf x2]
+  gf (ListAction (x:xs)) = mkApp (mkCId "ConsAction") [gf x, gf (ListAction xs)]
   fg t =
-    GListAction (fgs t) where
+    ListAction (fgs t) where
      fgs t = case unApp t of
       Just (i,[x1,x2]) | i == mkCId "BaseAction" -> [fg x1, fg x2]
       Just (i,[x1,x2]) | i == mkCId "ConsAction" -> fg x1 : fgs x2
@@ -164,70 +177,53 @@ instance Gf GListAction where
 
       _ -> error ("no ListAction " ++ show t)
 
-instance Gf GModal where
-  gf GMay = mkApp (mkCId "May") []
-  gf GMust = mkApp (mkCId "Must") []
-  gf GShould = mkApp (mkCId "Should") []
+instance Gf Modal where
+  gf (LexModal x) = mkApp (mkCId x) []
 
   fg t =
     case unApp t of
-      Just (i,[]) | i == mkCId "May" -> GMay 
-      Just (i,[]) | i == mkCId "Must" -> GMust 
-      Just (i,[]) | i == mkCId "Should" -> GShould 
 
-
+      Just (i,[]) -> LexModal (showCId i)
       _ -> error ("no Modal " ++ show t)
 
-instance Gf GPhrase where
-  gf (GQProp x1) = mkApp (mkCId "QProp") [gf x1]
-  gf (GSProp x1) = mkApp (mkCId "SProp") [gf x1]
+instance Gf Phrase where
+  gf (QProp x1 x2 x3) = mkApp (mkCId "QProp") [gf x1, gf x2, gf x3]
+  gf (SProp x1 x2 x3) = mkApp (mkCId "SProp") [gf x1, gf x2, gf x3]
 
   fg t =
     case unApp t of
-      Just (i,[x1]) | i == mkCId "QProp" -> GQProp (fg x1)
-      Just (i,[x1]) | i == mkCId "SProp" -> GSProp (fg x1)
+      Just (i,[x1,x2,x3]) | i == mkCId "QProp" -> QProp (fg x1) (fg x2) (fg x3)
+      Just (i,[x1,x2,x3]) | i == mkCId "SProp" -> SProp (fg x1) (fg x2) (fg x3)
 
 
       _ -> error ("no Phrase " ++ show t)
 
-instance Gf GPred1 where
-  gf GMakeAssessment = mkApp (mkCId "MakeAssessment") []
+instance Gf Pred2 where
+  gf Notify = mkApp (mkCId "Notify") []
 
   fg t =
     case unApp t of
-      Just (i,[]) | i == mkCId "MakeAssessment" -> GMakeAssessment 
-
-
-      _ -> error ("no Pred1 " ++ show t)
-
-instance Gf GPred2 where
-  gf GNotify = mkApp (mkCId "Notify") []
-
-  fg t =
-    case unApp t of
-      Just (i,[]) | i == mkCId "Notify" -> GNotify 
+      Just (i,[]) | i == mkCId "Notify" -> Notify 
 
 
       _ -> error ("no Pred2 " ++ show t)
 
-instance Gf GProposition where
-  gf (GPred x1 x2) = mkApp (mkCId "Pred") [gf x1, gf x2]
+instance Gf Proposition where
+  gf (Pred x1 x2) = mkApp (mkCId "Pred") [gf x1, gf x2]
 
   fg t =
     case unApp t of
-      Just (i,[x1,x2]) | i == mkCId "Pred" -> GPred (fg x1) (fg x2)
+      Just (i,[x1,x2]) | i == mkCId "Pred" -> Pred (fg x1) (fg x2)
 
 
       _ -> error ("no Proposition " ++ show t)
 
-instance Gf GQuality where
-  gf GAsSoonAsPrac = mkApp (mkCId "AsSoonAsPrac") []
+instance Show Quality
 
-  fg t =
-    case unApp t of
-      Just (i,[]) | i == mkCId "AsSoonAsPrac" -> GAsSoonAsPrac 
+instance Gf Quality where
+  gf _ = undefined
+  fg _ = undefined
 
 
-      _ -> error ("no Quality " ++ show t)
 
 
