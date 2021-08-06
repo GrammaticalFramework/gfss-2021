@@ -1,3 +1,12 @@
+# Summary of GF Dreams Workshop
+
+Below is a written summary of everything discussed during the workshop, where I have tried to combine comments from all participants into a single congruous text, based on my notes and memory.
+
+Keep on dreamin'  
+John
+
+---
+
 > The mission of GF is to formalize the grammars of the world and make them available for computer applications.
 
 Covering every last world language may not be possible, but this is still a valid dream and ultimately the only way to get closer to it is to continue growing the GF community. GF can have an important role for under-resourced languages. Implementing a language formally in GF can give it a certain level of respect, and bootstrap the development of other resources in that language. A way of helping to disseminate GF could be contributing to Wikipedia and linking to GF grammars for different languages.
