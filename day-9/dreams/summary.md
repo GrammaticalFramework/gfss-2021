@@ -14,12 +14,12 @@ Covering every last world language may not be possible, but this is still a vali
 There are also a number of concrete things that we should continue to focus on in order to make it easier for people to start using GF, including:
 1. Maintaing the RGL core but encouraging more language-specific extensions.
 2. Put efforts into compiling comprehensive dictionaries.
-3. Be rigorous testing in testing to ensure high quality.
+3. Be rigorous in testing to ensure high quality.
 4. Provide high level APIs and development tools to make it easier to get started.
 5. Continue to strive for high scalability at compile and run time.
 
 Proper testing is important for ensuring quality, but also for helping to attract people into the community and for helping contributors to be effective in their work. However, testing things effectively is not neccessarily. The generality of the RGL and the fact that languages can differ so much also makes this harder to have a single standard testsuite for all resource grammars.
-There have been previous at establishing standardised testing methods for the RGL, including some work by Peter Ljunglöf, although they have not caught on much. The gf-test tool can be very effective, although it is slow for complex things such as entire RGs and is best used for testing one function at a time. Overall there is a need for more standardised tools, resources, and testing tools for RG developers. This could take the form of an abstract RGL treebank which grows constantly, with both language-independent and language-specific elements.
+There have been previous at establishing standardised testing methods for the RGL, including [some work by Peter Ljunglöf](https://github.com/GrammaticalFramework/gf-rgl/tree/master/unittest#readme), although they have not caught on much. The [gf-test tool](https://github.com/GrammaticalFramework/gftest) can be very effective, although it is (often unusably) slow for complex things such as entire RGs and is best used for testing one function at a time. Overall there is a need for more standardised tools, resources, and testing tools for RG developers. This could take the form of an abstract RGL treebank which grows constantly, with both language-independent and language-specific elements.
 
 When it comes to documentation for GF, there is a lot around although it is spread over various places. Sometimes there are overlaps, other times there are gaps, and it can be hard to find answers even they have been answered before.
 
